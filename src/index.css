@@ -1,0 +1,281 @@
+:root {
+	--header-height:40px;
+	--half-header-height:calc( var(--header-height) / 2 );
+	--header-control-height:calc( var(--header-height) * 0.62 );
+	--data-table-head-font-size:0.9em;
+	--data-table-body-font-size:0.9em;
+	--data-table-body-editable-font-size:0.95em;
+	--editbox-font-size-lg:1rem;
+	--editbox-font-size:0.9rem;
+	--editbox-font-size-sm:0.85rem;
+	--ok-color: #4f4f4f;
+	--cancel-color: #bf2f2f;
+	--error-color: #b2f2f2;
+	--button-color:#ffffff;
+	--lightgray-color:#dfdfdf;
+	--lightlightgray-color:#f4f4f4;
+	--gray-color:#7f7f7f;
+	--darkgray-color:#4f4f4f;
+	--dark-color:#2f2f2f;
+	--black-color:#000000;
+}
+
+	body { 
+		background-color:white; scroll-behavior:smooth;
+		font-family:arial; margin:0; padding:0;
+	}
+	
+	div { box-sizing: border-box; margin:0px; padding:0px; }
+	table { box-sizing: border-box; margin:0px; padding:0px; }
+	td { padding:0px; }
+	a {
+		text-decoration:none; color:white;
+	}
+
+	#header {
+		width:100%; min-width:100%; margin:0; padding:0; display:block; box-sizing:border-box;
+		border-bottom:2px solid #bfbfbf; 
+		background-image:linear-gradient(to right, rgb(240,240, 240), rgb(230,230,230), rgb(150,150,150));
+	}
+	#header::after {
+  		content: ""; clear: both; display: table;
+	}
+
+	#headerControls {
+		max-width:20%; margin:0; padding:0; box-sizing:border-box; overflow:hidden;
+		display:inline-block; float:left; text-align:left; height:var(--header-height); 
+	}
+	#headerControls div {
+		float:left; margin:4px 4px 0px 4px;
+		height:var(--header-control-height);
+	}
+	#headerControls div img {
+		border:1px solid white; border-radius:4px; padding:2px;
+		height:var(--header-control-height);
+	}
+	#headerControls div:first-child {
+		border:0px;
+	}
+
+	#projectDetails {
+		max-width: 80%; height: var(--header-height); overflow: hidden; margin:0px; display:block; float:left;
+		padding: 2px 2px 2px 12px; text-align:left; font-size:11px; color:black;
+	}
+	#projectName {
+		width:100%; height:var(--half-header-height); margin:0px; padding-top:2px; display:inline-block; 
+		white-space:nowrap; text-overflow:ellipsis; text-align:left; font-size:16px;
+	}
+	#projectTimeAndVersion {
+		width:100%; height:var(--half-header-height); display:inline-block; 
+		white-space:nowrap; text-overflow:ellipsis; overflow:hidden;
+		font-family:courier; text-align:left; font-size:11px; margin:0; padding:2px;
+	}
+
+	#projectUser {
+		max-width:20%; height:var(--header-height); margin:0px; padding:4px 24px 2px 8px; display:block; float:left;
+		white-space:nowrap; text-overflow:ellipsis; overflow:hidden;  
+		text-align:left; color:black; font-size:12px;
+	}
+
+	@media screen and (max-width: 800px) {
+		#projectUser { 
+			max-width:50%; text-align:left;
+		}
+		#headerControls { 
+			max-width:50%; text-align:left;
+		}
+		#projectDetails { 
+			max-width:100%; text-align:left;
+		}
+	}
+
+	.content {
+		width:100%; box-sizing:border-box; top:var(--header-height);
+		border:0; margin:0; padding:0; background-color:white; text-align:center;
+	}		
+
+	.page {
+		display:none; width:100%; border:0; margin:0; padding:0; background-color:white;
+	}
+
+	.toolbox div img { 
+		float:left; border:0; display:inline;
+		margin:0px 4px 0px 4px; padding:0px; height:var(--toolbox-img-height); 
+		cursor:pointer; opacity:0.7; 
+	}
+	.toolbox div img:hover { opacity:1.0; }
+
+	#dataTableHead th { 
+		top: 0 !important; position: sticky !important; padding: 2px;
+		background-color: #fefefe; border-right: 1px solid #efefef; border-bottom: 1px solid #efefef;
+		color: #7f7f7f; font-size: var(--data-table-head-font-size); font-weight: normal;
+		text-align: center; vertical-align: top;
+	}
+
+	#dataTableBody td { 
+		font-size: var(--data-table-body-font-size); 
+		font-weight: normal;
+		text-align: center;
+		vertical-align: top;
+		border-right: 1px solid #efefef;
+		border-bottom: 1px solid #efefef;
+		padding: 2px;
+	}
+
+	#dataTableBody td.dataTableEditable {
+		cursor:pointer !important; /*position:relative !important;*/ 
+		border-bottom: 1px solid #afafaf !important;  
+		padding-right: 12px !important; 
+		font-size: var(--data-table-body-editable-font-size); font-style: italic !important; 
+	}
+	#dataTableBody td.dataTableEditable .dataTableEditableMark {
+		/*position: absolute; bottom:0; right:0;*/
+		color:#7f7f7f; font-size: 8px; text-align: left; 
+	}
+
+	button { box-sizing:border-box; margin:0px; border:1px dotted var(--darkgray-color); 
+		border-radius:4px; background-color:var(--lightlightgray-color); 
+		cursor: pointer; text-align:center; }
+
+	button.ok { border-color:var(--ok-color); color:var(--ok-color); font-size:var(--editbox-font-size); }
+	button.ok:hover { background-color: var(--ok-color); color: white; }
+
+	button.cancel { border-color: var(--ok-color); color: var(--ok-color); font-size:var(--editbox-font-size); }
+	button.cancel:hover { background: var(--ok-color); color: white; }
+
+	#editBox { 
+		position:absolute; left:0; top:0;
+		box-sizing:border-box; margin:0px; padding:0px; 
+		display:none; left:0; top:0; width:100%; height:50vh; 
+	}
+	
+	#editBoxContent { 
+		box-sizing:border-box; position:absolute; overflow:auto; display:block; margin:0px; padding:0px; 
+		vertical-align:top; width:100%; min-width:100%; min-height:100%; background-color:#ffffff;
+	}
+	#editBoxContent::after {
+  		content: ""; clear: both; display: table;
+	}
+	#editBoxPane1, #editBoxPane2 { 
+		box-sizing:border-box; position:relative; margin:0px; 
+		float:left; display:inline-block; text-align:left; vertical-align:top; 
+		background-color:#ffffff; font-size:var(--editbox-font-size); 
+	}
+	#editBoxPane2 div {
+		padding:4px;
+	}
+	@media screen and (max-width: 800px) {
+		#editBoxPane1 { 
+			width:100%; max-width:100%; min-width:100%; 
+		}
+		#editBoxPane2 { 
+			width:100%; max-width:100%; min-width:100%;
+		}
+	}
+	@media screen and (min-width: 800px) {
+		#editBoxPane1 { 
+			width:60%; max-width:60%; min-width:60%; 
+		}
+		#editBoxPane2 { 
+			width:40%; max-width:40%; min-width:40%; padding-left:14px;
+		}
+	}
+
+	#editBoxMessage {
+		box-sizing: border-box; margin:0px 0px 12px 0px; width:100%; padding:4px; 
+		font-size:var(--editbox-font-size-sm); text-align:center; font-style:italic; color:#4f4f4f;
+	}
+
+	#editBoxDetails { box-sizing: border-box; margin:0px; padding:4px; text-align:left; color:#4f4f4f; font-size:var(--editbox-font-size-sm); }
+
+	#editBoxInputs { box-sizing: border-box; margin:0px; text-align:right; }		
+
+	#editBoxInputs .editBoxInputContainer {
+		box-sizing: border-box; margin:0px; width:100%; min-width:100%;
+	}
+	#editBoxInputs .editBoxInputContainer::after {
+  		content: ""; clear: both; display: table;
+	}
+
+	#editBoxInputs .editBoxPromptDiv {
+		position:relative; 
+		box-sizing: border-box; margin:0px; 
+		width:50%; color:#7f7f7f; float:left; display:inline-block; padding:4px 4px 0px 4px; text-align:right; font-size:var(--editbox-font-size); 
+	} 
+	#editBoxInputs .editBoxInputDiv { 
+		position:relative;
+		box-sizing: border-box; margin:0px; padding:0px 4px 4px 4px; 
+		width:50%; float:left; display:inline-block; font-size:var(--editbox-font-size-lg); 
+	}		
+
+	#editBoxInputs textarea.editBoxInput {
+		box-sizing: border-box; margin:0px; 
+		width:100%; padding:4px; font-size:var(--editbox-font-size);  
+		color:blue;
+	}
+	#editBoxInputs input.editBoxInput {
+		box-sizing: border-box; margin:0px; 
+		width:100%; padding:4px; font-size:var(--editbox-font-size-lg); border-radius:4px; border:1px dotted #d0d0d0;		
+		color:blue;
+	}
+	#editBoxInputs input.editBoxInputDateTime {
+		left:0; top:0; box-sizing: border-box; margin:0px; text-align:right;
+		width:100%; padding:4px; font-size:var(--editbox-font-size-lg); border-radius:4px; border:1px dotted #d0d0d0;	
+		color:blue;
+	}
+	#editBoxInputs .editBoxInputCallCalendar {
+		position:absolute; left:5px; top:0; box-sizing: border-box; margin:0px; padding:1px 5px 4px 5px; cursor:pointer; 
+		max-width:20%; border-radius:4px; border:1px solid #d0d0d0;  
+		background-color:#bfbfbf; font-size:var(--editbox-font-size-lg); 
+		font-weight:bold;
+	}
+
+	@media screen and (max-width: 800px) { 
+		#editBoxInputs .editBoxPromptDiv { 
+			width:100%; min-width:100%; text-align:left; font-size:var(--editbox-font-size);
+		}                          
+		#editBoxInputs .editBoxInputDiv { 
+			width:100%; min-width:100%;  
+		}
+		#editBoxInputs textarea { min-width:100%; }
+		#editBoxInputs input { min-width:100%; }
+	}
+
+
+	h1 { margin:2% 1% 1% 1%; font-size:140%; color:var(--dark-color); font-variant:small-caps; }
+
+	dim { border-color:var(--lightgray-color); color:var(--lightgray-color); }
+
+	.ok-color { color: var(--ok-color); }
+	.cancel-color { color: var(--cancel-color); }
+	.error-color { color: var(--error-color); }	
+
+	.keyword {
+		background-color: var(--lightgray-color); padding:0px 4px 0px 4px; border-radius:4px; font-style:normal;
+	}
+
+	input.noArrow[type=number]::-webkit-inner-spin-button, 
+	input.noArrow[type=number]::-webkit-outer-spin-button { 
+	  -webkit-appearance: none; 
+	  margin: 0; 
+	  step:'any';
+	}
+
+	select.noArrow::-ms-expand { display: none; }
+	select.noArrow {
+	    -webkit-appearance: none;
+	    appearance: none;
+	}
+
+	.helpText {
+		padding:24px 20vw 0px 20vw; text-align:left; line-height:150%; font-size:14px;
+	}
+
+	.helpText div {
+		margin-bottom:24px;
+	}
+
+	.helpText div img {
+		display:inline-block; height:20px; position:relative; top:4px;
+	}
+
