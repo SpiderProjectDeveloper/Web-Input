@@ -7,6 +7,13 @@ var _calendarFormat = { 'dateOnly':false };
 
 var _calendarMonthArray = [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ];
 
+var _calendarMonthArrays = {
+	'en': _calendarMonthArray,
+	'ru': [ 'ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕП','ОКТ','НОЯ','ДЕК' ]
+};
+
+var _calendarInputCurrentlyEdited = null;
+
 export function calendarGetFormat() {
 	return _calendarFormat;
 }
@@ -23,20 +30,40 @@ export function calendarSetFormat( format ) {
 	}
 }
 
-export function calendar( container, callBack, cellWidth, cellHeight, date, monthArray=null ) {
+var _calendarCellWidth, _calendarCellHeight;
+
+export function calendar( container, forInput, callBack, cellWidth, cellHeight, date, monthArray=null ) {
 	if( calendarIsActive() ) {
+		let isReturn = (forInput === _calendarInputCurrentlyEdited ) ? true : false;
 		calendarCancel();
-		return;
+		if( isReturn ) {
+			return;
+		}
 	}
-	if( monthArray ) {
+	_calendarInputCurrentlyEdited = forInput;
+
+	forInput.disabled = true;
+
+	if( typeof(monthArray) === 'string' ) { 	// A language specified
+		_calendarMonthArray = _calendarMonthArrays[monthArray];
+	} else if( monthArray !== null ) {
 		_calendarMonthArray = monthArray;
-	}
+	} 
+
+	_calendarCellWidth = cellWidth;
+	_calendarCellHeight = cellHeight;
 	calendarInit( container, callBack, cellWidth, cellHeight );
 	calendarSetDate( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes() );
 }
 
-export function calendarCancel() {
+export function calendarCancel( date=null ) {
 	if( _calendar !== null ) {
+		if( _calendarCallBack ) {
+			_calendarCallBack( date );			
+		}
+		_calendarInputCurrentlyEdited.disabled = false;
+		_calendarInputCurrentlyEdited = null;
+
 		_calendarContainer.removeChild(_calendar);
 		_calendar = null;
 		_calendarCallBack = null; // !!!! added
@@ -57,44 +84,34 @@ function calendarInit( container, callBack, cellWidth, cellHeight ) {
 	if( _calendar !== null ) {
 		return;
 	}
-	container.style.display = 'block';
+	let overallHeight = (_calendarFormat.dateOnly) ? 8 : 9.75;
+	container.style.display = 'inline-block';
 	_calendar = document.createElement("div");
 	_calendar.style.width = (cellWidth*7+4) + 'px';
-	_calendar.style.height = (cellHeight*8+4) + 'px';
-	_calendar.style.border = '3px solid #808080';
+	_calendar.style.height = (cellHeight*overallHeight) + 'px';
+	_calendar.style.border = '2px solid #d0d0d0';
+	_calendar.style.borderRadius = '4px';
 	_calendar.style.boxSizing = 'content-box';
 	_calendar.style.backgroundColor = '#ffffff';
 	_calendar.style.position = 'relative';
 	_calendar.addEventListener( 'mousedown', function(e) { e.stopPropagation(); } );
 
-	let yearInput = document.createElement("input");
-	yearInput.setAttribute( 'id', `calendar-year` );
-	yearInput.style.position = 'absolute';
-	yearInput.style.top = '2px';
-	yearInput.style.left = (cellWidth*4) + 'px';
-	yearInput.style.width = (cellWidth*3) + 'px';
-	yearInput.style.minWidth = yearInput.style.width;
-	yearInput.style.height = cellHeight + 'px';
-	yearInput.style.fontSize = parseInt(4*cellHeight/7) + 'px';
-	yearInput.style.border = '0px';
-	yearInput.style.margin = '0px';
-	yearInput.style.padding = '0px';
-	yearInput.value = '2000';
-	yearInput.setAttribute('type','number');
-	yearInput.setAttribute('min','1970');
-	yearInput.setAttribute('max','2100');
-	yearInput.setAttribute('step','1');
-	yearInput.onchange = function() {
-		calendarDisplay( this.value, document.getElementById('calendar-month').value );
-	};
+	let yearInput = createInputNumberElement('calendar-year', 4, 0.1, 2, 1, { type: 'year'} );
 	_calendar.appendChild(yearInput);
+
+	let yearDec = createArrowControlElement( 'calendar-year-dec', 3, 0.1, 1, 1, '&minus;', 'center' );
+	yearDec.onclick = function(e) { changeIntegerInInput( yearInput, -1); }
+	_calendar.appendChild(yearDec);
+	let yearInc = createArrowControlElement( 'calendar-year-inc', 6, 0.1, 1, 1, '&plus;', 'center' );
+	yearInc.onclick = function(e) { changeIntegerInInput( yearInput, +1); }
+	_calendar.appendChild(yearInc);
 
 	let monthInput = document.createElement("select");
 	monthInput.setAttribute( 'id', `calendar-month` );
 	monthInput.style.position = 'absolute';
 	monthInput.style.top = '2px';
 	monthInput.style.left = '2px';
-	monthInput.style.width = (cellWidth*4-4) + 'px';
+	monthInput.style.width = (cellWidth*3-4) + 'px';
 	monthInput.style.height = cellHeight + 'px';
 	monthInput.style.fontSize = parseInt(4*cellHeight/7) + 'px';
 	monthInput.style.border = '0px';
@@ -115,20 +132,8 @@ function calendarInit( container, callBack, cellWidth, cellHeight ) {
 
 	for( let w = 0 ; w < 6 ; w++ ) {
 		for( let d = 0 ; d < 7 ; d++ ) {
-			let day = document.createElement("div");
-			day.setAttribute( 'id', `calendar-w${w}-d${d}` );
-			day.style.position = 'absolute';
-			day.style.top = ((w+1)*cellHeight+2) + 'px';
-			day.style.left = (d*cellWidth+2) + 'px';
-			day.style.width = cellWidth + 'px';
-			day.style.height = cellHeight + 'px';
-			day.style.border = '1px dotted #dfdfdf';
-			day.style.margin = '0px';
-			day.style.padding = '0px';
-			day.style.textAlign = 'center';
-			day.style.fontSize = parseInt(4*cellHeight/7) + 'px';
-			day.style.backgroundColor = '#ffffff';
-			day.style.cursor = 'pointer';
+			let day = createClickableElement( `calendar-w${w}-d${d}`, d, w+1, 1, 1 ); 
+
 			day.addEventListener( 'mousedown', function(e) {
 				e.stopPropagation();
 				//calendarSetDate(null, null, parseInt(this.childNodes[0].textContent));
@@ -148,86 +153,41 @@ function calendarInit( container, callBack, cellWidth, cellHeight ) {
 					hr = 0;
 					mn = 0;
 				}
-				_calendarContainer.removeChild(_calendar);
-				_calendar = null;
-				container.style.display = 'none';
 				let date = new Date( Date.UTC(y,m,d,hr,mn,0,0) );
-				_calendarCallBack( date );
+				calendarCancel(date);
 			});
 			day.appendChild( document.createTextNode(d) );
 			_calendar.appendChild(day);
 		}
 	}
 
-	let cancel = document.createElement("div");
-	cancel.setAttribute( 'id', `calendar-cancel` );
-	cancel.style.position = 'absolute';
-	cancel.style.top = (cellHeight*7 + 2 + 1) + 'px';
-	cancel.style.left = '2px';
-	cancel.style.width = cellWidth*2 + 'px';
-	cancel.style.height = cellHeight + 'px';
-	cancel.style.fontSize = parseInt(4*cellHeight/6);
-	cancel.style.textAlign = 'center';
-	cancel.appendChild( document.createTextNode('✖')); // ✕
-	cancel.style.cursor = 'pointer';
+	let cancelTop = (_calendarFormat.dateOnly) ? 7 : 8.75;
+	let cancel = createClickableElement( 'calendar-cancel', 0.25, cancelTop, 1, 1, { color:'#aa4444', textAlign:'left', border:null } );
+	cancel.appendChild( document.createTextNode('X') );
 	cancel.onclick = function(e) {
-		_calendarCallBack( null );			
 		calendarCancel();
 	}
 	_calendar.appendChild(cancel);
 
 	if( !_calendarFormat.dateOnly ) {
-		let hourInput = document.createElement("select");
-		hourInput.setAttribute( 'id', `calendar-hour` );
-		hourInput.style.position = 'absolute';
-		hourInput.style.top = (cellHeight*7 + 2) + 'px';
-		hourInput.style.left = (cellWidth*4 + 2) + 'px';
-		hourInput.style.width = cellWidth*1 + 'px';
-		hourInput.style.height = cellHeight + 'px';
-		hourInput.style.border = '0px';
-		hourInput.style.margin = '0px';
-		hourInput.style.padding = '0px 0px 0px 2px';
-		hourInput.style.fontSize = parseInt(3*cellHeight/7);		
-		for( let h = 0 ; h < 24 ; h++ ) {
-		    let option = document.createElement("option");
-		    option.value = h;
-		    option.text = (h >= 10) ? h : ('0' + h);
-		    hourInput.appendChild(option);
-		}		
-		hourInput.setAttribute('class','noArrow');
+		let hourInput = createInputNumberElement('calendar-hour', 4.5, 7.9, 1, 1, { type: 'hour', align: 'center' } );
 		_calendar.appendChild(hourInput);
-
-		let hourMinuteSeparator = document.createElement("div");
-		hourMinuteSeparator.setAttribute( 'id', `calendar-hourMinuteSeparator` );
-		hourMinuteSeparator.style.position = 'absolute';
-		hourMinuteSeparator.style.top = (cellHeight*7 + 2) + 'px';
-		hourMinuteSeparator.style.left = (cellWidth*5 + 2) + 'px';
-		hourMinuteSeparator.style.width = cellWidth + 'px';
-		hourMinuteSeparator.style.height = cellHeight + 'px';
-		hourMinuteSeparator.style.textAlign = 'center';
-		hourMinuteSeparator.style.fontSize = parseInt(2*cellHeight/5);
-		hourMinuteSeparator.appendChild( document.createTextNode(':'));
-		_calendar.appendChild(hourMinuteSeparator);
-
-		let minuteInput = document.createElement("select");
-		minuteInput.setAttribute( 'id', `calendar-minute` );
-		minuteInput.style.position = 'absolute';
-		minuteInput.style.top = (cellHeight*7 + 2) + 'px';
-		minuteInput.style.left = (cellWidth*6 + 2) + 'px';
-		minuteInput.style.width = cellWidth*1 + 'px';
-		minuteInput.style.height = cellHeight + 'px';
-		minuteInput.style.border = '0px';
-		minuteInput.style.margin = '0px';
-		minuteInput.style.padding = '0px 0px 0px 2px';
-		minuteInput.style.fontSize = parseInt(3*cellHeight/7);
-		for( let m = 0 ; m < 60 ; m++ ) {
-		    let option = document.createElement("option");
-		    option.value = m;
-		    option.text = (m >= 10) ? m : ('0' + m);
-		    minuteInput.appendChild(option);
-		}		
-		minuteInput.setAttribute('class','noArrow');
+		let hourInc = createArrowControlElement( 'calendar-hour-inc', 4.5, 7, 1, 0.75, '&plus;', 'center' );
+		hourInc.onclick = function(e) { changeIntegerInInput( hourInput, +1); }
+		_calendar.appendChild(hourInc);
+		let hourDec = createArrowControlElement( 'hour-hour-dec', 4.5, 8.8, 1, 0.75, '&minus;', 'center' );
+		hourDec.onclick = function(e) { changeIntegerInInput( hourInput, -1); }
+		_calendar.appendChild(hourDec);
+			
+		let minuteInput = createInputNumberElement('calendar-minute', 5.5, 7.9, 1, 1, { type: 'minute', align: 'center' } );
 		_calendar.appendChild(minuteInput);
+		let minuteInc = createArrowControlElement( 'calendar-minute-inc', 5.5, 7, 1, 0.75, '&plus;', 'center' );
+		minuteInc.onclick = function(e) { changeIntegerInInput( minuteInput, +1); }
+		_calendar.appendChild(minuteInc);
+		let minuteDec = createArrowControlElement( 'hour-minute-dec', 5.5, 8.8, 1, 0.75, '&minus;', 'center' );
+		minuteDec.onclick = function(e) { changeIntegerInInput( minuteInput, -1); }
+		_calendar.appendChild(minuteDec);
+
 	}
 
 	_calendarContainer = container;
@@ -287,10 +247,170 @@ function calendarDisplay( year, month, day=null, hour=null, minute=null ) {
 
 	if( !_calendarFormat.dateOnly ) {			
 		if( hour !== null ) {
-			document.getElementById('calendar-hour').value = hour;
+			let elem = document.getElementById('calendar-hour');
+			elem.value = hour;
+			onNumberChange(elem);
 		}
 		if( minute !== null ) {	
-			document.getElementById('calendar-minute').value = minute;		
+			let elem = document.getElementById('calendar-minute');
+			elem.value = minute;
+			onNumberChange(elem);
 		}
 	}
+}
+
+
+function changeIntegerInInput( elem, change ) {
+	let value;
+	try {
+		value = parseInt(elem.value);
+	} catch(e) {
+		return;
+	}
+	let minValue = parseInt( elem.dataset.minValue );
+	let maxValue = parseInt( elem.dataset.maxValue );
+	value = value + change;
+	if( value < minValue ) {
+		value = minValue;
+	} else if( value > maxValue ) {
+		value = maxValue;
+	}
+	if( elem.dataset.paddingTo2Digits === 'y' && value < 10 ) {
+		elem.value = '0' + String(value);
+	} else {
+		elem.value = String(value);
+	}
+}
+
+function createArrowControlElement( id, left, top, width, height, html, align='left' ) {
+	let elem = document.createElement("div");
+	elem.setAttribute( 'id', id );
+	elem.style.position = 'absolute';
+	elem.style.top = _calendarCellHeight * top + 'px';
+	elem.style.height = _calendarCellHeight * height + 'px';
+	elem.style.minHeight = elem.style.height;
+	elem.style.maxHeight = elem.style.height;
+	elem.style.left = (_calendarCellWidth * left) + 'px';
+	elem.style.width = (_calendarCellWidth * width) + 'px';
+	elem.style.minWidth = elem.style.width;
+	elem.style.maxWidth = elem.style.width;
+	elem.style.fontSize = parseInt(4.5 * _calendarCellHeight / 7) + 'px';
+	elem.style.textAlign = align;
+	elem.style.fontWeight = 'bold';
+	elem.style.backgroundColor = '#dfdfdf';
+	elem.style.color = '#2f2f2f';
+	elem.style.margin = '0px';
+	elem.style.padding = '-2px 0px 0px 0px';
+	elem.style.cursor = 'pointer';
+	elem.innerHTML = html;
+	return elem;
+}
+
+
+function createInputNumberElement( id, left, top, width, height, props={} ) {
+	let elem = document.createElement("input");
+	elem.setAttribute( 'id', id );
+	elem.style.position = 'absolute';
+	elem.style.top = (_calendarCellHeight * top) + 'px';
+	elem.style.height = (_calendarCellHeight * height) + 'px';
+	elem.style.height = elem.style.minHeight;
+	elem.style.height = elem.style.maxHeight;
+	elem.style.left = (_calendarCellWidth * left) + 'px';
+	elem.style.width = (_calendarCellWidth * width) + 'px';
+	elem.style.minWidth = elem.style.width;
+	elem.style.maxWidth = elem.style.width;
+	elem.style.fontSize = parseInt(4 * _calendarCellHeight / 7) + 'px';
+	elem.style.fontWeight = 'bold';
+	elem.style.textAlign = ( 'align' in props ) ? props.align : 'center';
+	elem.style.border = '1px';
+	elem.style.margin = '0px';
+	elem.style.padding = '2px';
+	elem.dataset.previousvalue = '';
+
+	let min, max;
+	let paddingTo2Digits;
+	if( 'type' in props ) {
+		if( props.type === 'year') {
+			min=1970; max=2020;
+			paddingTo2Digits=false;
+		} else if( props.type === 'hour' ) {
+			min=0; max=23; 
+			paddingTo2Digits=true;
+		} else if( props.type === 'minute') {
+			min=0; max=59;
+			paddingTo2Digits=true;
+		}
+	}
+	elem.dataset.minValue = String(min);
+	elem.dataset.maxValue = String(max);
+	elem.dataset.paddingTo2Digits = (paddingTo2Digits) ? 'y' : 'n'; 
+	elem.onchange = function(e) {
+		onNumberChange(elem, min, max );
+	}
+	elem.oninput = function(e) {
+		onNumberInput( elem );
+	}
+	elem.setAttribute('type','text');
+	//elem.setAttribute('min', min);
+	//elem.setAttribute('max', max);
+	//elem.setAttribute('class','noArrow');
+	return elem;
+}
+
+
+function onNumberInput( elem ) {
+	const re = RegExp('^[0-9]*$');
+	let reExec = re.exec(elem.value);
+    if( reExec === null ) {
+    	elem.value = elem.dataset.previousvalue;
+	} else {
+    	elem.dataset.previousvalue = elem.value;
+	}
+}
+
+function onNumberChange( elem ) {
+	if( elem === document.activeElement ) {
+		return;
+	}	
+	let minValue = parseInt( elem.dataset.minValue );
+	let maxValue = parseInt( elem.dataset.maxValue );
+	let value;
+	try { 
+		value = parseInt(elem.value);
+	} catch(e) {
+		elem.value = elem.dataset.originalvalue;
+		return;
+	}
+	if( value < minValue || isNaN(value) ) {
+		value = minValue;
+	} 	
+	if( value > maxValue ) {
+		value = maxValue;
+	}
+	if( elem.dataset.paddingTo2Digits === 'y' && value < 10 && elem.value.length == 1) {
+		elem.value = '0' + value;
+	} else {
+		elem.value = value;
+	}
+	elem.dataset.previousvalue = elem.value;
+}
+
+
+function createClickableElement( id, left, top, width, height, props={} ) {
+	let elem = document.createElement("div");
+	elem.setAttribute( 'id', id );
+	elem.style.position = 'absolute';
+	elem.style.left = (left*_calendarCellWidth + 0) + 'px';
+	elem.style.top = (top*_calendarCellHeight + 0) + 'px';
+	elem.style.width = (_calendarCellWidth * width) + 'px';
+	elem.style.height = (_calendarCellHeight * height) + 'px';
+	elem.style.border = ('border' in props) ? props.border : '1px dotted #dfdfdf';
+	elem.style.margin = '0px';
+	elem.style.padding = '0px';
+	elem.style.textAlign = ('textAlign' in props) ? props.textAlign : 'center';
+	elem.style.fontSize = parseInt(_calendarCellHeight * 4 / 7) + 'px';
+	elem.style.color = ('color' in props) ? props.color : '#4f4f4f';
+	elem.style.backgroundColor = ('backgroundColor' in props) ? props.backgroundColor : '#ffffff';
+	elem.style.cursor = 'pointer';
+	return elem;
 }

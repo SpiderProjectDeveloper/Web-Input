@@ -6,9 +6,15 @@ export var _icons = {
 	newProject: "data:image/png;base64,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"
 };
 
-var helpTextEn = "";
+var helpTextEn = "Clicking editable fields opens a dialog window where you may enter and update\
+ performance values for the chosen line of the table.</br></br>\
+ Values entered are immediately sent to your Spider Project application as you enter these one by one\
+ and if a value has been sent and validated Ok the depending values are as well immediately updated at your screen"; 
 
-var helpTextRu = "";
+var helpTextRu = "При нажатии на редактируемое поле вызывается диалоговое окно для ввода данных учета\
+	для текущей строки таблицы.</br><br/>\
+	Вводимые данные сразу же отправляются в приложение Spider Project, каждое значение отправляется отдельно.\
+	Если передача значения и его проверка проходят успешно, зависимые значения пересчитываются и обновляются на экране немедленно.";
 
 export var _texts = { 
 	'en': { operation:'Operation', phase:'Phase', status:'Status', resourse:'Resourse(s)', version: 'Version',
@@ -18,11 +24,6 @@ export var _texts = {
 		monthNames:['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'],
 		helpTitle:'How to...',
 		helpText:helpTextEn,
-		resetTableDimensionsTitle:'Reset table dimensions: column widths and order',
-		zoom100Title:'Zoom 100% horizontally with 50 lines per screen limit',
-		zoomReadableTitle:'Set "readable" 28 lines per screen limit and fit the visible lines into screen horizontally',
-		zoomVerticallyTitle:'Vertical zoom',
-		zoomHorizontallyTitle:'Horizontal zoom',
 		editBoxUploadTitle:'Photos&Documents',
 		editBoxFileUploadTitle:'Choose',
 		editBoxFileReplaceTitle:'Replace',
@@ -52,11 +53,14 @@ export var _texts = {
 		statusErrorMessage:'System error: editing is not allowed. Please contact your system administrator',
 		serverDataChangedMessage:'The data currently presented are obsolete. Please reload the page!',
 		waitWhileLockingMessage:'Please wait while preparing for data editing...',
+		browserWindowCloseMessage: 'It is recommended to use the "Close" option of the menu for finishing working with a project. Still wish to close this tab?',
 		titlesRightTitle:'Click to display titles above activities and phases',
 		titlesAboveTitle:'Click to display titles of activities and phases rightward',
 		titlesHiddenTitle:'The titles of activities and phases are hidden due to way too small size. Please zoom in to display the titles!',
 		titleNewProject:'Reset the settings and redisplay the page. Use it when a new project has been uploaded',
-		confirmExitWithoutSaveMessage:'The changes made will be lost. Do you wish to proceed?' },
+		confirmExitWithoutSaveMessage:'The changes made will be lost. Do you wish to proceed?',
+		menuInputTitle: 'Performance Input', menuHelpTitle: 'Help', menuCloseProjectTitle: 'Close Project', 
+		editBoxCancelButtonTitle: 'Back to table &larrhk;' },
 	'ru': { operation:'Операция', phase:'Фаза', status:'Состояние', resourse:'Ресурс(ы)', version: 'Версия',
 		expandColumn:'[]', Level:'Уровень', Name:'Название', Code:'Код', Start:'Старт', Fin:'Финиш', 
 		Notes:'Комментарий', status0:'Не начато', status100:'Завершено', statusNotFinished:'Не завершено',
@@ -64,11 +68,6 @@ export var _texts = {
 		monthNames:['ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕН','ОКТ','НОЯ','ДЕК'], 
 		helpTitle:'Справка',
 		helpText:helpTextRu,
-		resetTableDimensionsTitle:'Вернуться к виду таблицы, настроенному в локальной версии Spider Project',
-		zoom100Title:'Установить 100% масштаб по горизонтали и макс. 50 строк по вертикали',
-		zoomReadableTitle:'Установить "читаемый" масштаб макс. 28 строк на экране',
-		zoomVerticallyTitle:'Вертикальный масштаб',
-		zoomHorizontallyTitle:'Горизонтальный масштаб',	
 		editBoxUploadTitle:'Фото&Документы',
 		editBoxFileUploadTitle:'Выбрать',
 		editBoxFileReplaceTitle:'Заменить',
@@ -90,6 +89,7 @@ export var _texts = {
 		datetimeStartFinError:'Начальная и/или конечная даты установлены неверно!',
 		emptyFieldError:'Поле не может быть пустым!',
 		noConnectionWithServerMessage:'Связь с сервером сейчас отсутствует. К сожалению, вы не можете редактировать данные!',
+		browserWindowCloseMessage: 'Рекомендуется завершать работу с проектом с помощью опции меню "Закрыть проект". Все равно закрыть эту вкладку?',
 		dataLockedTitle:'Включен режим редактирования, и данные заблокированы от чтения/записи извне.' +
 			' Чтобы введенные вами данные попали в Spider Project нажмите сюда, отключив режим редактирования',
 		dataNotLockedTitle:'Режим редактирования выключен. Чтобы править данные, нажмите сюда, заблокировав их от чтения/записи извне.',
@@ -103,5 +103,7 @@ export var _texts = {
 		titlesAboveTitle:'Нажмите, чтобы названия операций и фаз отображались справа',
 		titlesHiddenTitle:'Названия операций и фаз скрыты из-за слишком малого размера текста!',
 		titleNewProject:'Перегрузить страницу и сбросить все ее настройки. Используйте, если на сервер загружен новый проект',
-		confirmExitWithoutSaveMessage:'Сделанные вами изменения не сохранятся. Продолжить?' }
+		confirmExitWithoutSaveMessage:'Сделанные вами изменения не сохранятся. Продолжить?',
+		menuInputTitle: 'Ввод учета', menuHelpTitle: 'Справка', menuCloseProjectTitle: 'Закрыть проект',
+		editBoxCancelButtonTitle: 'К таблице &larrhk;' }
 };

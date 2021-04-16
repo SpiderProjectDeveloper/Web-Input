@@ -16,7 +16,7 @@ export function drawTableHeader() {
 	trHead.appendChild(tdExpand);
 
 	let left = 0;
-	for( let col = 1 ; col < _data.fields.length ; col++ ) {
+	for( let col = 0 ; col < _data.fields.length ; col++ ) {
 		if( _data.fields[col].hidden === 1 ) {
 			continue;
 		}		
@@ -100,7 +100,7 @@ export function drawTableContent( init=false, shiftOnly=false ) {
 		 	};
 		}
 
-		for( let col = 1 ; col < _data.fields.length ; col++ ) {
+		for( let col = 0 ; col < _data.fields.length ; col++ ) {
 			if( _data.fields[col].hidden === 1 ) {
 				continue;
 			}			
@@ -184,13 +184,15 @@ export function drawTableTd( content, i, ref, td=null, tdTextNode=null )
 		content = '';
 	}
 
-	if( ref === "Level" ) { // To display no 'teams' or 'assignments' (phases only). 
+	if( false && ref === "Level" ) { // To display no 'teams' or 'assignments' (phases only). 
 		if( typeof(content) === 'string' ) {
 			content = "";
 		}
 	}
 	if( ref === 'Name' ) { // A name should be adjusted according to it position in the hierarchy
-		content = spacesToPadNameAccordingToHierarchy(_data.activities[i].parents.length) + content; 
+		;
+		// NO PADDING NAMES YET 
+		// content = spacesToPadNameAccordingToHierarchy(_data.activities[i].parents.length) + content; 
 		//if( typeof(_data.activities[i].Level) === 'number' ) { // If it is a phase...
 		//	fontWeight = 'bold'; // ... making it bold.
 		//}

@@ -9,7 +9,7 @@ module.exports = {
     port: 9000,
 		setup(app) {
 			app.get('/.input_data', (req, res) => {
-			  res.sendFile(path.resolve(__dirname, 'public/data.php'));
+			  res.sendFile(path.resolve(__dirname, 'public/result.json'));
 			});
 			app.post('/.save_input', (req, res) => {
 				res.send( JSON.stringify({ 
@@ -21,6 +21,9 @@ module.exports = {
 			});
 			app.post('/.check_input_synchro', (req, res) => {
 				res.send( JSON.stringify( { synchronized:1 } ) );
+			});
+			app.get('/project_closed.html', (req, res) => {
+			  res.sendFile(path.resolve(__dirname, 'public/project_closed.html'));
 			});
 			//app.get('/bundle.js', (req, res) => {
 			//	  res.sendFile(path.resolve(__dirname, 'dist/bundle.js'));

@@ -6,6 +6,7 @@ import { _globals, _data, initGlobals, initGlobalsWithLayoutParameters, initGlob
 import { displayMessageBox, hideMessageBox, createEditBoxInputs } from './boxes.js';
 import { decColorToString, dateIntoSpiderDateString, digitsOnly, makeActivityCache } from './utils.js';
 import { drawTableHeader, drawTableContent } from './drawtable.js';
+import { initMenu } from './menu.js';
 
 // Attaching to the html container element
 let script = document.getElementById('bundle');
@@ -26,9 +27,9 @@ if( appContainer ) {
 initGlobals(appContainer, userName);
 	
 window.addEventListener( "load", onWindowLoad );
+window.addEventListener( 'resize', function() { location.reload(); } );
 
 function onWindowLoad() {
-	//document.getElementById('toolboxNewProjectDiv').onclick = function(e) { newProject(); };
 	initGlobalsWithLayoutParameters();
 	loadData();
 }
@@ -43,10 +44,9 @@ function loadData() {
 			    	try{
 				        setData( JSON.parse(this.responseText) );
 			    	} catch(e) {
-			    		//alert('Error: ' + e.name + ":" + e.message + "\n" + e.stack + "\n" + e.cause);
 			    		errorParsingData = true;
 			    	}
-			    	if( errorParsingData ) { // To ensure data are parsed ok... // alert(this.responseText);
+			    	if( errorParsingData ) { // To ensure data are parsed ok...
 							displayMessageBox( _texts[_globals.lang].errorParsingData ); 
 							return;
 			    	}
@@ -72,8 +72,8 @@ function loadData() {
 		    }
 		};
 		if( _globals.dataRequest !== '' ) {
-			xmlhttp.open("GET", _settings.urlData + '?' + decodeURIComponent(_globals.dataRequest), true);
-			//console.log(_settings.urlData + '?' + decodeURIComponent(_globals.dataRequest));
+			//xmlhttp.open("GET", _settings.urlData + '?' + decodeURIComponent(_globals.dataRequest), true);
+			xmlhttp.open("GET", _settings.urlData + window.location.search, true);
 			xmlhttp.setRequestHeader("Cache-Control", "no-cache");
 			xmlhttp.send();
 			displayMessageBox( _texts[_globals.lang].waitDataText ); 
@@ -221,7 +221,8 @@ function displayHeaderAndFooterInfo() {
 	document.title = "SP | " + _data.project.Name;
 
 	let timeAndVersionAndUser = _texts[_globals.lang].version + ": " + _data.project.Version + 
-		'&nbsp;|&nbsp;' + [ _globals.startDateStr + " - " + _globals.endDateStr ] + '&nbsp;|&nbsp;' + _globals.userName;
+		'&nbsp;|&nbsp;' + [ _globals.startDateStr + " - " + _globals.endDateStr ] + 
+		(('Notes' in _data.project && _data.project.Notes.length > 0) ? ('&nbsp;|&nbsp;' + _data.project.Notes) : '');
 	document.getElementById('projectTimeAndVersion').innerHTML = timeAndVersionAndUser;
 	/*
 	if( _globals.userName !== null ) {
@@ -230,21 +231,5 @@ function displayHeaderAndFooterInfo() {
 		el.onclick = function(e) { logout(); };
 	}
 	*/
-}
-
-
-function logout() {
-	if( document.location.host ) {
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 ) {
-				if( this.status == 401 ) {
-					window.location.replace('http://www.spiderproject.com/');
-				}
-			}
-		};
-		xmlhttp.open("GET", _settings.urlLogout, true);
-		xmlhttp.setRequestHeader("Cache-Control", "no-cache");
-		xmlhttp.send();
-	} 
+	initMenu();
 }

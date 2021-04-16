@@ -249,36 +249,6 @@ export function trimString( str ) {
 }
 
 
-export function csvIntoJSON(s) {
-	
-	let lines = s.split('\n');
-	if( lines.length < 2 ) {
-		return [];
-	}
-	let titles = lines[0].split('\t');
-	if( titles < 3 ) {
-		return [];
-	}		
-	titles[titles.length-1] = trimString( titles[titles.length-1] );
-
-	let json = [];
-	for( let i = 1 ; i < lines.length ; i++ ) {
-		let jsonLine = {};
-		let line = lines[i].replace( String.fromCharCode(1), '\n' );
-		let values = line.split('\t');
-		if( values.length != titles.length ) {
-			break;
-		}
-		for( let t = 0 ; t < titles.length ; t++ ) {
-			jsonLine[ titles[t] ] = values[t]; 
-		}
-		json.push(jsonLine);
-	}
-	return json;
-}
-
-
-
 export function adjustDateTimeToFormat( dateTime, format ) {
 	if( !(format > 0) ) { // "format == 0 " stands for "date-only"
 		let pattern = new RegExp(' +[0-9]{2}' + _globals.timeDelim + '[0-9]{2} *$'); 

@@ -1,5 +1,5 @@
 ﻿export var _settings = {
-	urlData:'/.input_data', urlLogout:'/.logout', urlCloseInput:'./close_input', urlSaveData: '/.save_input',  
+	urlData:'/.input_data', urlLogout:'/.logout', urlCloseProject:'/.close_project', urlSaveData: '/.save_input',  
 
 	tableHeaderFontColor:'#7f7f7f',	tableHeaderFillColor:'#fefefe', tableHeaderBorderColor:'#cfcfcf', 
 	tableContentFontColor:'#4f4f4f', tableContentFillColor:'#efefff', tableContentStrokeColor:'#4f4f4f', 

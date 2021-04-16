@@ -20,6 +20,9 @@
 	--black-color:#000000;
 }
 
+	* { box-sizing: border-box;	}
+	div { margin:0; padding:0; }
+
 	body { 
 		background-color:white; scroll-behavior:smooth;
 		font-family:arial; margin:0; padding:0;
@@ -33,33 +36,18 @@
 	}
 
 	#header {
-		width:100%; min-width:100%; margin:0; padding:0; display:block; box-sizing:border-box;
+		height:var(--header-height); width:100%; min-width:100%; margin:0; padding:0; display:block; box-sizing:border-box;
 		border-bottom:2px solid #bfbfbf; 
-		background-image:linear-gradient(to right, rgb(240,240, 240), rgb(230,230,230), rgb(150,150,150));
+		background-image:linear-gradient(to right, rgb(120,120,120), rgb(20,20,20), rgb(120,120,120));	
 	}
+	
 	#header::after {
   		content: ""; clear: both; display: table;
 	}
 
-	#headerControls {
-		max-width:20%; margin:0; padding:0; box-sizing:border-box; overflow:hidden;
-		display:inline-block; float:left; text-align:left; height:var(--header-height); 
-	}
-	#headerControls div {
-		float:left; margin:4px 4px 0px 4px;
-		height:var(--header-control-height);
-	}
-	#headerControls div img {
-		border:1px solid white; border-radius:4px; padding:2px;
-		height:var(--header-control-height);
-	}
-	#headerControls div:first-child {
-		border:0px;
-	}
-
 	#projectDetails {
 		max-width: 80%; height: var(--header-height); overflow: hidden; margin:0px; display:block; float:left;
-		padding: 2px 2px 2px 12px; text-align:left; font-size:11px; color:black;
+		padding: 2px 2px 2px 12px; text-align:left; font-size:11px; color:white;
 	}
 	#projectName {
 		width:100%; height:var(--half-header-height); margin:0px; padding-top:2px; display:inline-block; 
@@ -71,39 +59,57 @@
 		font-family:courier; text-align:left; font-size:11px; margin:0; padding:2px;
 	}
 
-	#projectUser {
-		max-width:20%; height:var(--header-height); margin:0px; padding:4px 24px 2px 8px; display:block; float:left;
-		white-space:nowrap; text-overflow:ellipsis; overflow:hidden;  
-		text-align:left; color:black; font-size:12px;
+	#menu {
+    width:var(--menu-width); height:var(--header-height); margin:0px 0px 0px 0px; padding:0px; 
+    display:block; float:left; text-align:left; 
 	}
 
-	@media screen and (max-width: 800px) {
-		#projectUser { 
-			max-width:50%; text-align:left;
-		}
-		#headerControls { 
-			max-width:50%; text-align:left;
-		}
-		#projectDetails { 
-			max-width:100%; text-align:left;
-		}
+	#dropdown {
+    position:relative; display: inline-block; 
 	}
 
-	.content {
-		width:100%; box-sizing:border-box; top:var(--header-height);
-		border:0; margin:0; padding:0; background-color:white; text-align:center;
-	}		
-
-	.page {
-		display:none; width:100%; border:0; margin:0; padding:0; background-color:white;
+	#dropdownButton {
+			display:block; float:left; height:var(--header-height); max-height:var(--header-height); 
+			margin:0px; padding:0px 2px 0px 2px; border:none; 
+			background-color:rgba(0,0,0,0); color: #dfdfdf; cursor: pointer; font-size:var(--half-header-height);
 	}
 
-	.toolbox div img { 
-		float:left; border:0; display:inline;
-		margin:0px 4px 0px 4px; padding:0px; height:var(--toolbox-img-height); 
-		cursor:pointer; opacity:0.7; 
+	#dropdownContent {
+			z-index: 1000; display: none; position: absolute; top:var(--header-height); width: 20vw;
+			margin:0; padding:2px; background-color: rgba(70, 70, 70, 0.8); 
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); text-align:left;
 	}
-	.toolbox div img:hover { opacity:1.0; }
+	@media only screen and (max-width: 1200px) {
+		#dropdownContent { width:25vw; }
+	}
+	@media only screen and (max-width: 800px) {
+		#dropdownContent { width:50vw; }
+	}
+	@media only screen and (max-width: 600px) {
+		#dropdownContent { width:75vw; }
+	}
+
+	#dropdownContent div {
+			font-size:var(--two-fifth-header-height); cursor:pointer; padding:4px; color:#dfdfdf;
+	}
+
+	#dropdownContent div:hover { background-color:#2f2f2f; color:#dfdfdf; }
+	#dropdown:hover #dropdownButton { color: white; }
+	/* #dropdown:hover #dropdownContent { display: block; } */
+	/* #dropdownButton:hover #dropdownContent { display: block; } */
+
+	#dropdownContent div img {
+			height:28px; padding:1px; border: 1px solid #7f7f7f; border-radius:5px;
+	}
+
+	#menuUser {
+			border-bottom: 1px dotted gray; height: auto !important; padding: 8px 4px 8px 4px !important;
+	}
+	#menuUserName { color:#efefef; }
+
+	#containerDiv {
+		width:100%; overflow:auto; margin:0; padding:0; box-sizing:border-box; text-align:left;
+	}
 
 	#dataTableHead th { 
 		top: 0 !important; position: sticky !important; padding: 2px;
@@ -143,41 +149,54 @@
 	button.cancel { border-color: var(--ok-color); color: var(--ok-color); font-size:var(--editbox-font-size); }
 	button.cancel:hover { background: var(--ok-color); color: white; }
 
+	button.cancelDisabled { border-color: var(--ok-color); color: var(--lightgray-color); font-size:var(--editbox-font-size); }
+
+	#blackOutBox {
+		position:absolute; display:none; left:0; top:0; min-width:100%; min-height:100%; background-color:#4f4f4f; opacity:0.35;
+	}
+
+	#editBoxCancel {
+		width:80%; box-sizing:border-box; padding:12px; margin:0px 10% 18px 10%; font-size:16px;
+	}
+
 	#editBox { 
-		position:absolute; left:0; top:0;
-		box-sizing:border-box; margin:0px; padding:0px; 
-		display:none; left:0; top:0; width:100%; height:50vh; 
+		position:absolute; left:0; top:(var(--header-height));		
+		display:none; width:100%; height:calc(100vh - var(--header-height)); max-height:calc(100vh - var(--header-height) - 8);
+		box-sizing:border-box; margin:0px; padding:0px 0px 0px 0px;  
 	}
 	
 	#editBoxContent { 
-		box-sizing:border-box; position:absolute; overflow:auto; display:block; margin:0px; padding:0px; 
-		vertical-align:top; width:100%; min-width:100%; min-height:100%; background-color:#ffffff;
+		box-sizing:border-box; position:absolute; overflow:auto; display:block; margin:0px; padding:12px 0px 0px 0px; 
+		width:100%; min-width:100%; max-width:100%; min-height:100%; background-color:#ffffff;
 	}
 	#editBoxContent::after {
   		content: ""; clear: both; display: table;
 	}
 	#editBoxPane1, #editBoxPane2 { 
 		box-sizing:border-box; position:relative; margin:0px; 
-		float:left; display:inline-block; text-align:left; vertical-align:top; 
+		float: left; text-align:left; vertical-align:top; 
 		background-color:#ffffff; font-size:var(--editbox-font-size); 
 	}
 	#editBoxPane2 div {
 		padding:4px;
 	}
 	@media screen and (max-width: 800px) {
+		#editBoxContent {
+			overflow:unset; 
+		}
 		#editBoxPane1 { 
-			width:100%; max-width:100%; min-width:100%; 
+			width:100%; max-width:100%; min-width:100%; float:none;
 		}
 		#editBoxPane2 { 
-			width:100%; max-width:100%; min-width:100%;
+			width:100%; max-width:100%; min-width:100%; float:none;
 		}
 	}
 	@media screen and (min-width: 800px) {
 		#editBoxPane1 { 
-			width:60%; max-width:60%; min-width:60%; 
+			width:65%; max-width:65%; min-width:65%; 
 		}
 		#editBoxPane2 { 
-			width:40%; max-width:40%; min-width:40%; padding-left:14px;
+			width:35%; max-width:35%; min-width:35%; padding-left:10px;
 		}
 	}
 
@@ -191,7 +210,7 @@
 	#editBoxInputs { box-sizing: border-box; margin:0px; text-align:right; }		
 
 	#editBoxInputs .editBoxInputContainer {
-		box-sizing: border-box; margin:0px; width:100%; min-width:100%;
+		box-sizing: border-box; margin:0px; width:100%; min-width:100%; max-width:100%; margin-top:8px;
 	}
 	#editBoxInputs .editBoxInputContainer::after {
   		content: ""; clear: both; display: table;
@@ -200,33 +219,33 @@
 	#editBoxInputs .editBoxPromptDiv {
 		position:relative; 
 		box-sizing: border-box; margin:0px; 
-		width:50%; color:#7f7f7f; float:left; display:inline-block; padding:4px 4px 0px 4px; text-align:right; font-size:var(--editbox-font-size); 
+		width:45%; color:#7f7f7f; float:left; padding:4px 4px 0px 4px; text-align:right; font-size:1rem; 
 	} 
 	#editBoxInputs .editBoxInputDiv { 
 		position:relative;
 		box-sizing: border-box; margin:0px; padding:0px 4px 4px 4px; 
-		width:50%; float:left; display:inline-block; font-size:var(--editbox-font-size-lg); 
+		width:55%; float:left; display:block; font-size:1rem; 
 	}		
 
 	#editBoxInputs textarea.editBoxInput {
 		box-sizing: border-box; margin:0px; 
-		width:100%; padding:4px; font-size:var(--editbox-font-size);  
+		width:100%; padding:4px; font-size:0.95rem;  
 		color:blue;
 	}
 	#editBoxInputs input.editBoxInput {
 		box-sizing: border-box; margin:0px; 
-		width:100%; padding:4px; font-size:var(--editbox-font-size-lg); border-radius:4px; border:1px dotted #d0d0d0;		
+		width:100%; padding:4px; font-size:1.0rem; border-radius:4px; border:1px dotted #d0d0d0;		
 		color:blue;
 	}
 	#editBoxInputs input.editBoxInputDateTime {
-		left:0; top:0; box-sizing: border-box; margin:0px; text-align:right;
-		width:100%; padding:4px; font-size:var(--editbox-font-size-lg); border-radius:4px; border:1px dotted #d0d0d0;	
+		left:0; top:0; box-sizing: border-box; margin:0px; text-align:left;
+		width:100%; padding:4px 4px 4px 2em; font-size:1.0rem; border-radius:4px; border:1px dotted #d0d0d0;	
 		color:blue;
 	}
 	#editBoxInputs .editBoxInputCallCalendar {
-		position:absolute; left:5px; top:0; box-sizing: border-box; margin:0px; padding:1px 5px 4px 5px; cursor:pointer; 
-		max-width:20%; border-radius:4px; border:1px solid #d0d0d0;  
-		background-color:#bfbfbf; font-size:var(--editbox-font-size-lg); 
+		position:absolute; left:0.3em; top:0.00em; box-sizing: border-box; margin:0px; padding:4px 4px 4px 4px; cursor:pointer; 
+		max-width:20%; border-radius:4px; border:0px;  
+		background-color:#e0e0e0; font-size:1.0em; 
 		font-weight:bold;
 	}
 

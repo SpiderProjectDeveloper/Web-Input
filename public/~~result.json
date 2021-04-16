@@ -1,0 +1,148 @@
+{
+  "parameters" : {
+    "language" : "ru",
+    "timeDelim" : ":",
+    "dateDelim" : ".",
+    "dateFormat" : "",
+    "uploadTime" : 1618235423 
+  },
+  "project" : {
+    "Code" : "p",
+    "Version" : 1,
+    "Name" : "Проект 552",
+    "Notes" : "",
+    "CurTime" : 1600243200,
+    "WexbimPath" : "",
+    "secondsInPixel" : "4688",
+    "expandToLevelAtStart" : "3" 
+  },
+  "fields" : [
+    {
+      "Code" : "Level",
+      "Name" : "Уровень",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 2 
+    },
+    {
+      "Code" : "Code",
+      "Name" : "Код",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Name",
+      "Name" : "Название",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 40 
+    },
+    {
+      "Code" : "Start",
+      "Name" : "Начало периода",
+      "Type" : "datetime",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 1,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Fin",
+      "Name" : "Окончание периода",
+      "Type" : "datetime",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 1,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolDone",
+      "Name" : "Объём [Выполнено]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolAdj",
+      "Name" : "Поправка объёма",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "DurAdj",
+      "Name" : "Поправка длительности",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "DurDone",
+      "Name" : "Длительность, Часы [Пройдено]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Calen",
+      "Name" : "Календарь",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "WorkLoadDone",
+      "Name" : "Трудоёмкость [Выполнено]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "f_FontColor",
+      "Name" : "Цвет текста",
+      "Type" : "text",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    } 
+  ],
+  "activities" : [
+    {
+      "Level" : "1",
+      "Code" : "g",
+      "Name" : "Проект 552",
+      "Start" : 1600243200,
+      "Fin" : 1600790400,
+      "Calen" : "A" 
+    },
+    {
+      "Code" : "1",
+      "Name" : "\"678\"",
+      "Start" : 1600243200,
+      "Fin" : 1600790400,
+      "VolDone" : 100,
+      "DurDone" : 40,
+      "Calen" : "A" 
+    } 
+  ] 
+}

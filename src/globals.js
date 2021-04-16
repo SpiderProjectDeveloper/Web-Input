@@ -31,7 +31,7 @@ export function initGlobals( appContainer, userName ) {
 	}
 
 	if( !userName ) {
-		let cookieUserName = getCookie( 'userName' );
+		let cookieUserName = getCookie( 'user' );
 		if( cookieUserName !== null ) {
 			userName = cookieUserName;
 		}
@@ -81,8 +81,8 @@ export function initGlobalsWithLayoutParameters() {
 	_globals.containerDivWidth = window.innerWidth - _settings.containerHPadding*2;
 	_globals.containerDiv.style.padding=`0px ${_settings.containerHPadding}px 0px ${_settings.containerHPadding}px`;
 
-	_globals.containerDiv.addEventListener('selectstart', function() { event.preventDefault(); return false; } );
-	_globals.containerDiv.addEventListener('selectend', function() { event.preventDefault(); return false; } );
+	_globals.containerDiv.addEventListener('selectstart', function(event) { event.preventDefault(); return false; } );
+	_globals.containerDiv.addEventListener('selectend', function(event) { event.preventDefault(); return false; } );
 }
 
 export function initGlobalsWithDataParameters() {
