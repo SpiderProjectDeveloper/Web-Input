@@ -1,0 +1,252 @@
+﻿{
+  "fields" : [
+    {
+      "Code" : "Level",
+      "Name" : "Уровень",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 2 
+    },
+    {
+      "Code" : "Code",
+      "Name" : "Код",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Name",
+      "Name" : "Название",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 40 
+    },
+    {
+      "Code" : "Start",
+      "Name" : "Начало периода",
+      "Type" : "datetime",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Fin",
+      "Name" : "Окончание периода",
+      "Type" : "datetime",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolPlan",
+      "Name" : "Объём [Было]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolDone",
+      "Name" : "Объём [Выполнено]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolAdj",
+      "Name" : "Поправка объёма",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolRest",
+      "Name" : "Объём [Остаток]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "TeamDur",
+      "Name" : "Длительность, Часы [Было]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "DurAdj",
+      "Name" : "Поправка длительности",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "DurDone",
+      "Name" : "Длительность, Часы [Пройдено]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "DurRest",
+      "Name" : "Длительность, Часы [Остаток]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "NumFact",
+      "Name" : "Количество [Факт]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "WorkLoadDone",
+      "Name" : "Трудоёмкость [Выполнено]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "LoadFact",
+      "Name" : "Загрузка [Факт]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Calen",
+      "Name" : "Календарь",
+      "Type" : "text",
+      "hidden" : 1,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "f_FontColor",
+      "Name" : "Цвет текста",
+      "Type" : "text",
+      "hidden" : 1,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "f_ColorBack",
+      "Name" : "Цвет фона",
+      "Type" : "text",
+      "hidden" : 1,
+      "format" : 0,
+      "widthsym" : 17 
+    } 
+  ],
+  "array" : [
+    {
+      "Code" : "в1",
+      "Name" : "Планировка участка",
+      "VolPlan" : 5000,
+      "VolRest" : 5000,
+      "TeamDur" : 55.5555555555556,
+      "DurRest" : 55.5555555555556,
+      "f_ColorBack" : "16777215" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "A",
+      "Name" : "Грейдер",
+      "VolPlan" : 5001,
+      "VolRest" : 5002,
+      "TeamDur" : 54.5555555555556,
+      "DurRest" : 56.5555555555556,
+      "NumFact" : 1,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "E",
+      "Name" : "Машинист",
+      "VolPlan" : 5010,
+      "VolRest" : 5020,
+      "TeamDur" : 58.5555555555556,
+      "DurRest" : 59.5555555555556,
+      "NumFact" : 3,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "F",
+      "Name" : "Рабочие",
+      "VolPlan" : 5000,
+      "VolRest" : 5000,
+      "TeamDur" : 55.5555555555556,
+      "DurRest" : 55.5555555555556,
+      "NumFact" : 5,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "C",
+      "Name" : "Скрепер",
+      "VolPlan" : 5000,
+      "VolRest" : 5000,
+      "TeamDur" : 55.5555555555556,
+      "DurRest" : 55.5555555555556,
+      "NumFact" : 1,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "B",
+      "Name" : "Бульдозер 1",
+      "Start" : 1618588140,
+      "Fin" : 1619192940,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "O",
+      "Name" : "Бульдозер 2",
+      "VolPlan" : 5000,
+      "VolRest" : 5000,
+      "TeamDur" : 55.5555555555556,
+      "DurRest" : 55.5555555555556,
+      "NumFact" : 1,
+      "f_ColorBack" : "14745599" 
+    } 
+  ],
+  "errcode" : 0,
+  "error" : "" 
+}

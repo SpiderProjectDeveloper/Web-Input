@@ -280,13 +280,13 @@ export function displayEditBoxWithData( id ) {
 				}
 			} else if( ref === 'VolDone' ) { // If this is a "VolDone" field changed, recalculation of "VolRest" is required...
 				elem.onblur = function(e) {
-					if( !validateEditFieldAndFocusIfFailed( this, 'float') ) {
+					if( !validateEditFieldAndFocusIfFailed( this, 'number') ) {
 						return;
 					}
 				}
 			} else if( ref === 'DurDone' ) { // If this is a "DurDone" field changed, recalculation of "DurRest" is required...
 				elem.onblur = function(e) {
-					if( !validateEditFieldAndFocusIfFailed( this, 'float') ) {
+					if( !validateEditFieldAndFocusIfFailed( this, 'number') ) {
 						return;
 					}					
 				}
@@ -347,21 +347,22 @@ function saveUserDataFromEditBox(ref) {
 					return;
 				}
 
-				let editBoxActivityCacheKey = makeActivityCacheKey( _data.activities[_editBoxOperationIndex].Level, 
-					_data.activities[_editBoxOperationIndex].Code );
+				let ei = _editBoxOperationIndex;
+				let editBoxActivityCacheKey = makeActivityCacheKey( _data.activities[ei].Level, _data.activities[ei].Code, 
+					_data.meta[ei].parentOperationCode, _data.activities[ei].AssIndex );
 				for( let i = 0 ; i < responseObj.array.length ; i++ ) {
 					let arrayItem = responseObj.array[i];
-					let key = makeActivityCacheKey( arrayItem.Level, arrayItem.Code );
+					let pcode = ( i === 0 ) ? null : responseObj.array[0].Code; 	// parent (if exists) goes first (i===0), cheildren next
+					let key = makeActivityCacheKey( arrayItem.Level, arrayItem.Code, pcode, arrayItem.AssIndex );
 					if( key in _data.activityCache ) {
 						for( let k in arrayItem ) {
-							if( k === 'Level' || k === 'Code' ) {
+							if( k === 'Level' || k === 'Code' || k === 'AssIndex') {
 								continue;
 							}
 							let index = _data.activityCache[key];
 							if( !('userData' in _data.activities[index]) ) {
 								_data.activities[index].userData = {};
 							}
-							
 							_data.activities[index].userData[k] = arrayItem[k];
 							if( key === editBoxActivityCacheKey ) {
 								let elem = document.getElementById( 'editBoxInput' + k ); // ... retrieving the element that stores a new value.
@@ -460,7 +461,7 @@ function validateEditField( input, type, allowedEmpty=true ) {
     		r.message = _texts[_globals.lang].intError;    		
     		return r;
     	}
-	} else if( type === 'float' ) {
+	} else if( type === 'number' ) {
 		let pattern = new RegExp("[^ \\.0-9]");
     	let illegalCharacters = pattern.test(value);
     	if( illegalCharacters ) { 
@@ -496,27 +497,8 @@ function getCalendarFormat() {
 
 function createUserDataObjectToSendAfterEditingInBox( i, ref ) {
 	let parentOperationCode = null;
-	if( _data.activities[i].Level === 'A' ) { 	// It is an assignment - searching for parent
-		if( _data.activities[i].parents.length > 0 ) {
-			let parentIndex = _data.activities[i].parents[0];
-			if( _data.activities[parentIndex].Level === null ) { 	// It is an operation
-				parentOperationCode = _data.activities[parentIndex].Code;
-			} else if( _data.activities[parentIndex].Level == 'T' ) { 	// It is a team
-				if( _data.activities[i].parents.length > 1 ) {
-					let parentOfParentIndex = _data.activities[i].parents[1];
-					if( _data.activities[parentOfParentIndex].Level === null ) { // It is an operation
-						parentOperationCode = _data.activities[parentOrParentIndex].Code;
-					}
-				}	
-			}				
-		}
-	} else if( _data.activities[i].Level == 'T' ) { 	// It is a team - searching for parent
-		if( _data.activities[i].parents.length > 0 ) {
-			let parentIndex = _data.activities[i].parents[0];
-			if( _data.activities[parentIndex].Level === null ) { 	// It is an operation
-				parentOperationCode = _data.activities[parentIndex].Code;
-			}
-		}
+	if( _data.meta[i].parentOfParentIndex ) {
+		parentOperationCode = _data.activities[ _data.meta[i].parentOfParentIndex ].Code;
 	}
 
 	let userData = { "Code": _data.activities[i].Code };

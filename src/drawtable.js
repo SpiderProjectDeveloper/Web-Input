@@ -43,7 +43,7 @@ export function drawTableContent( init=false, shiftOnly=false ) {
 		let tr = document.createElement('tr');
 		tableBody.appendChild(tr);	
 		tr.id = 'tableRow' + i;
-		tr.style.backgroundColor = _data.activities[i].colorBack;
+		tr.style.backgroundColor = _data.meta[i].colorBack;
 
 		// Expand functionality [+] / [-]
 		let expandText='';
@@ -136,7 +136,7 @@ export function drawTableContent( init=false, shiftOnly=false ) {
 
 export function drawTableTd( content, i, ref, td=null, tdTextNode=null )
 {
-	if( td === null && _data.refSettings[ref].editableType === null ) { 	// Called not from drawTable - thus only after editing
+	if( td === null && _data.refSettings[ref].type === null ) { 	// Called not from drawTable - thus only after editing
 		return;
 	}
 	let col = _data.refSettings[ref].column;
@@ -152,19 +152,17 @@ export function drawTableTd( content, i, ref, td=null, tdTextNode=null )
 	}
 	if( tdTextNode === null )
 		return;	
-	let color = _data.activities[i].colorFont; // _settings.tableContentStrokeColor;
-	let backgroundColor = _data.activities[i].colorBack;
 	let fontStyle = 'normal';
 	let fontWeight = 'normal';
 	let textAlign = 'left';
 	if( 'userData' in _data.activities[i] ) { // If the value has been changed by user and not saved
 		if( ref in _data.activities[i].userData ) {
 			let bChanged = false;
-			if( _data.refSettings[ref].editableType === 'datetime' ) {
-				if( parseInt(_data.activities[i].userData[ref]) != parseInt(_data.activities[i][ref]) ) {
+			if( _data.refSettings[ref].type === 'datetime' ) {
+				if( parseInt(_data.activities[i].userData[ref]) !== parseInt(_data.activities[i][ref]) ) {
 					bChanged=true;
 				}
-			} else if( _data.refSettings[ref].editableType === 'float' ) {
+			} else if( _data.refSettings[ref].type === 'number' ) {
 				if( !(Math.abs(_data.activities[i].userData[ref] - _data.activities[i][ref]) < 10e-12) ) {
 					bChanged = true;
 				}
@@ -221,7 +219,7 @@ export function drawTableTd( content, i, ref, td=null, tdTextNode=null )
 		content = '&#9679';
 	}
 	tdTextNode.innerHTML = content;
-	td.style.color = _data.activities[i].colorFont; // _settings.tableContentStrokeColor;
+	td.style.color = _data.meta[i].colorFont; // _settings.tableContentStrokeColor;
 	td.style.fontStyle = fontStyle;
 	td.style.fontWeight = fontWeight;
 	td.style.textAlign = textAlign;
@@ -255,7 +253,7 @@ function writeNewValueFromInputElemIntoTable( inputElemValue, i, ref ) {
 		destElem.innerHTML = spacesToPadNameAccordingToHierarchy(hrh) + inputElemValue;
 	}
 	else { 
-		if( type === 'float' ) {
+		if( type === 'number' ) {
 			let valueToTrim = parseFloat(inputElemValue);
 			if( !isNaN(valueToTrim) && typeof(format) !== 'undefined' ) {
 				inputElemValue = valueToTrim.toFixed(format);

@@ -148,7 +148,7 @@ export function getCookie( cname, type='string' ) {
 					return intValue;
 				}
 			}
-			if( type == 'float' ) {
+			if( type == 'number' ) {
 				let floatValue = parseFloat(value);
 				if( !isNaN(floatValue) ) {
 					return floatValue;
@@ -282,18 +282,24 @@ export function makeFieldsCache( data ) {
 	return fieldsCache; 
 }
 
-export function makeActivityCacheKey( level, code ) {
+export function makeActivityCacheKey( level, code, pcode, asn ) {
 	if( typeof(level) === 'undefined' || level === null || (typeof(level) === 'string' && level.length === 0) ) {
-		level = 'none';
+		level = 'nolevel';
 	}
-	return '_' + level + '_' + code;
+	if( typeof(pcode) === 'undefined' || pcode === null || (typeof(pcode) === 'string' && pcode.length === 0) ) {
+		pcode = 'noparent';
+	}
+	if( typeof(asn) === 'undefined' || asn === null || (typeof(asn) === 'string' && asn.length === 0) ) {
+		asn = 'noasn';
+	}
+	return '_' + level + '_' + code + '_' + pcode + '_' + asn;
 }
 
 export function makeActivityCache( data ) {
 	let dataCache = {};
 	for( let i = 0 ; i < data.activities.length ; i++ ) {
 		let d = data.activities[i];
-		let key = makeActivityCacheKey( d.Level, d.Code );
+		let key = makeActivityCacheKey( d.Level, d.Code, data.meta[i].parentOperationCode, d.AssIndex );
 		dataCache[key] = i;
 	}	
 	return dataCache;

@@ -9,8 +9,9 @@ module.exports = {
     port: 9000,
 		setup(app) {
 			app.get('/.input_data', (req, res) => {
-			  res.sendFile(path.resolve(__dirname, 'public/result.json'));
+			  res.sendFile(path.resolve(__dirname, 'public/input_data.json'));
 			});
+/*
 			app.post('/.save_input', (req, res) => {
 				res.send( JSON.stringify({ 
 					errcode:0, 
@@ -19,8 +20,9 @@ module.exports = {
 					}) 
 				);
 			});
-			app.post('/.check_input_synchro', (req, res) => {
-				res.send( JSON.stringify( { synchronized:1 } ) );
+*/
+			app.post('/.save_input', (req, res) => {
+			  res.sendFile(path.resolve(__dirname, 'public/save_input.json'));
 			});
 			app.get('/project_closed.html', (req, res) => {
 			  res.sendFile(path.resolve(__dirname, 'public/project_closed.html'));

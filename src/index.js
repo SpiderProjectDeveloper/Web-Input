@@ -46,12 +46,12 @@ function loadData() {
 			    	} catch(e) {
 			    		errorParsingData = true;
 			    	}
-			    	if( errorParsingData ) { // To ensure data are parsed ok...
+			    	if( errorParsingData || !('activities' in _data) ) { // To ensure data are parsed ok...
 							displayMessageBox( _texts[_globals.lang].errorParsingData ); 
 							return;
 			    	}
-			    	if( !('activities' in _data) || _data.activities.length == 0 ) {
-							displayMessageBox( _texts[_globals.lang].errorParsingData ); 
+			    	if( _data.activities.length === 0 ) {
+							displayMessageBox( _texts[_globals.lang].emptyData ); 
 							return;
 			    	}
 						hideMessageBox();
@@ -127,14 +127,14 @@ function initData() {
 		}
 		_data.refSettings[ _data.fields[col].Code ] = o;
 	}
-	//console.log(_data);
-	_data.activityCache = makeActivityCache(_data);
 	
+	// Setting colors, trimming levels and initializing meta data
+	_data.meta = new Array(_data.activities.length);
 	for( let i = 0 ; i < _data.activities.length ; i++ ) {
+		_data.meta[i] = {};
 		let d = _data.activities[i];
-		d.color = decColorToString( d.f_ColorCom, _settings.ganttOperation0Color );
-		d.colorBack = decColorToString( d.f_ColorBack, "#ffffff" );
-		d.colorFont = decColorToString( d.f_FontColor, _settings.tableContentStrokeColor );
+		_data.meta[i].colorBack = decColorToString( d.f_ColorBack, "#ffffff" );
+		_data.meta[i].colorFont = decColorToString( d.f_FontColor, _settings.tableContentStrokeColor );
 		if( typeof( d.Level ) === 'string' ) {
 			if( digitsOnly(d.Level) ) {
 				d.Level = parseInt(d.Level);
@@ -149,13 +149,40 @@ function initData() {
 
 	// Initializing the parent-children structure and the link structure
 	for( let i = 0 ; i < _data.activities.length ; i++ ) {
-		_data.activities[i].id = 'ganttRect' + i; // Id
+		//_data.activities[i].id = 'ganttRect' + i; // Id
 		initParents(i);
-		_data.activities[i]._isPhase = (typeof(_data.activities[i].Level) === 'number') ? true : false;
+		//_data.activities[i].__isPhase = (typeof(_data.activities[i].Level) === 'number') ? true : false;
 	}
 
-	// Marking 'expandables'
+	// Marking 'expandables' and parent operations
 	for( let i = 0 ; i < _data.activities.length ; i++ ) {
+
+		let parentOperationIndex = null;
+		if( _data.activities[i].Level === 'A' ) { 	// It is an assignment - searching for parent
+			if( _data.activities[i].parents.length > 0 ) {
+				let parentIndex = _data.activities[i].parents[0];
+				if( _data.activities[parentIndex].Level === null ) { 	// It is an operation
+					parentOperationIndex = parentIndex;
+				} else if( _data.activities[parentIndex].Level == 'T' ) { 	// It is a team
+					if( _data.activities[i].parents.length > 1 ) {
+						let parentOfParentIndex = _data.activities[i].parents[1];
+						if( _data.activities[parentOfParentIndex].Level === null ) { // It is an operation
+							parentOperationIndex = parentOrParentIndex;
+						}
+					}	
+				}				
+			}
+		} else if( _data.activities[i].Level == 'T' ) { 	// It is a team - searching for parent
+			if( _data.activities[i].parents.length > 0 ) {
+				let parentIndex = _data.activities[i].parents[0];
+				if( _data.activities[parentIndex].Level === null ) { 	// It is an operation
+					parentOperationIndex = parentIndex;
+				}
+			}
+		}
+		_data.meta[i].parentOperationIndex = parentOperationIndex;
+		_data.meta[i].parentOperationCode = ( parentOperationIndex === null ) ? null : _data.activities[parentOperationIndex].Code;
+	
 		let hasChild = false;
 		for( let j = i+1 ; j < _data.activities.length ; j++ ) {
 			for( let k = 0 ; k < _data.activities[j].parents.length ; k++ ) {
@@ -177,9 +204,13 @@ function initData() {
 		}
 		_data.activities[i].visible = true;
 	}
+
+	_data.activityCache = makeActivityCache(_data);
 	return(0);
 }
 
+// \.activities\[([a-z]+)\]\.parents
+// .meta[$1].parents
 
 function initParents( iOperation ) {
 	_data.activities[iOperation].parents = []; // Initializing "parents"
