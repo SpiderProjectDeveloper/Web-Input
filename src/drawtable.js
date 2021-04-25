@@ -48,8 +48,8 @@ export function drawTableContent( init=false, shiftOnly=false ) {
 		// Expand functionality [+] / [-]
 		let expandText='';
 		let expandTextColor='#8f8f8f';
-		if( _data.activities[i].expandable ) {
-			if( _data.activities[i].expanded ) {
+		if( _data.meta[i].expandable ) {
+			if( _data.meta[i].expanded ) {
 				expandText = _tableRowExpanded;
  			} else {
 				expandText = _tableRowNotExpanded;
@@ -64,38 +64,38 @@ export function drawTableContent( init=false, shiftOnly=false ) {
 		expandTd.style.color = expandTextColor;
 		expandTd.style.fontSize = '16px';
 		expandTd.innerHTML = expandText;
-	 	if( _data.activities[i].expandable ) {
+	 	if( _data.meta[i].expandable ) {
 	 		expandTd.style.cursor = 'pointer';
 		 	expandTd.onmousedown = function(e) {
 		 		let operationNumber = Number(this.dataset.operationNumber); 
-		 		if( _data.activities[operationNumber].expanded == true ) {
+		 		if( _data.meta[operationNumber].expanded == true ) {
 		 			for( let iO = 0 ; iO < _data.activities.length ; iO++ ) {
-		 				for( let iP = 0 ; iP < _data.activities[iO].parents.length ; iP++ ) {
-		 	 				if( _data.activities[iO].parents[iP] == operationNumber ) {
+		 				for( let iP = 0 ; iP < _data.meta[iO].parents.length ; iP++ ) {
+		 	 				if( _data.meta[iO].parents[iP] == operationNumber ) {
 								document.getElementById('tableRow'+iO).style.display = 'none';
-			 					_data.activities[iO].visible = false;
+			 					_data.meta[iO].visible = false;
 			 					break;
 			 				}
 			 			}
 			 		}
 					document.getElementById('tableColumn0Row'+operationNumber).innerHTML = _tableRowNotExpanded;
-					_data.activities[operationNumber].expanded = false;
+					_data.meta[operationNumber].expanded = false;
 		 		} else {
 		 			for( let iO = operationNumber+1 ; iO < _data.activities.length ; iO++ ) {
-		 				for( let iP = 0 ; iP < _data.activities[iO].parents.length ; iP++ ) {
-		 					let iParent = _data.activities[iO].parents[iP];
+		 				for( let iP = 0 ; iP < _data.meta[iO].parents.length ; iP++ ) {
+		 					let iParent = _data.meta[iO].parents[iP];
 		 	 				if( iParent == operationNumber ) {
 								document.getElementById('tableRow'+iO).style.display = 'table-row';
-			 					_data.activities[iO].visible = true;
+			 					_data.meta[iO].visible = true;
 			 					break;
 			 				}
-			 				if( _data.activities[iParent].expandable && _data.activities[iParent].expanded == false ) {
+			 				if( _data.meta[iParent].expandable && _data.meta[iParent].expanded == false ) {
 			 					break;
 			 				}
 		 				}
 		 			}
 					document.getElementById('tableColumn0Row'+operationNumber).innerHTML = _tableRowExpanded;
-		 			_data.activities[operationNumber].expanded = true;
+		 			_data.meta[operationNumber].expanded = true;
 		 		}
 		 	};
 		}
@@ -190,7 +190,7 @@ export function drawTableTd( content, i, ref, td=null, tdTextNode=null )
 	if( ref === 'Name' ) { // A name should be adjusted according to it position in the hierarchy
 		;
 		// NO PADDING NAMES YET 
-		// content = spacesToPadNameAccordingToHierarchy(_data.activities[i].parents.length) + content; 
+		// content = spacesToPadNameAccordingToHierarchy(_data.meta[i].parents.length) + content; 
 		//if( typeof(_data.activities[i].Level) === 'number' ) { // If it is a phase...
 		//	fontWeight = 'bold'; // ... making it bold.
 		//}
@@ -249,7 +249,7 @@ function writeNewValueFromInputElemIntoTable( inputElemValue, i, ref ) {
 	}
 
 	if( ref === 'Name') { 	// Shifting according to hierarchy if it is a name
-		let hrh = _data.activities[i].parents.length;
+		let hrh = _data.meta[i].parents.length;
 		destElem.innerHTML = spacesToPadNameAccordingToHierarchy(hrh) + inputElemValue;
 	}
 	else { 

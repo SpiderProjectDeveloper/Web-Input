@@ -159,13 +159,13 @@ function initData() {
 
 		let parentOperationIndex = null;
 		if( _data.activities[i].Level === 'A' ) { 	// It is an assignment - searching for parent
-			if( _data.activities[i].parents.length > 0 ) {
-				let parentIndex = _data.activities[i].parents[0];
+			if( _data.meta[i].parents.length > 0 ) {
+				let parentIndex = _data.meta[i].parents[0];
 				if( _data.activities[parentIndex].Level === null ) { 	// It is an operation
 					parentOperationIndex = parentIndex;
 				} else if( _data.activities[parentIndex].Level == 'T' ) { 	// It is a team
-					if( _data.activities[i].parents.length > 1 ) {
-						let parentOfParentIndex = _data.activities[i].parents[1];
+					if( _data.meta[i].parents.length > 1 ) {
+						let parentOfParentIndex = _data.meta[i].parents[1];
 						if( _data.activities[parentOfParentIndex].Level === null ) { // It is an operation
 							parentOperationIndex = parentOrParentIndex;
 						}
@@ -173,8 +173,8 @@ function initData() {
 				}				
 			}
 		} else if( _data.activities[i].Level == 'T' ) { 	// It is a team - searching for parent
-			if( _data.activities[i].parents.length > 0 ) {
-				let parentIndex = _data.activities[i].parents[0];
+			if( _data.meta[i].parents.length > 0 ) {
+				let parentIndex = _data.meta[i].parents[0];
 				if( _data.activities[parentIndex].Level === null ) { 	// It is an operation
 					parentOperationIndex = parentIndex;
 				}
@@ -185,8 +185,8 @@ function initData() {
 	
 		let hasChild = false;
 		for( let j = i+1 ; j < _data.activities.length ; j++ ) {
-			for( let k = 0 ; k < _data.activities[j].parents.length ; k++ ) {
-				if( _data.activities[j].parents[k] == i ) { // If i is a parent of j
+			for( let k = 0 ; k < _data.meta[j].parents.length ; k++ ) {
+				if( _data.meta[j].parents[k] == i ) { // If i is a parent of j
 					hasChild = true;
 					break;
 				}
@@ -196,13 +196,13 @@ function initData() {
 			}
 		}
 		if( hasChild ) {
-			_data.activities[i].expanded = true;
-			_data.activities[i].expandable = true;
+			_data.meta[i].expanded = true;
+			_data.meta[i].expandable = true;
 		} else {
-			_data.activities[i].expanded = true;			
-			_data.activities[i].expandable = false;
+			_data.meta[i].expanded = true;			
+			_data.meta[i].expandable = false;
 		}
-		_data.activities[i].visible = true;
+		_data.meta[i].visible = true;
 	}
 
 	_data.activityCache = makeActivityCache(_data);
@@ -213,32 +213,32 @@ function initData() {
 // .meta[$1].parents
 
 function initParents( iOperation ) {
-	_data.activities[iOperation].parents = []; // Initializing "parents"
+	_data.meta[iOperation].parents = []; // Initializing "parents"
 	for( let i = iOperation-1 ; i >= 0 ; i-- ) {
-		let l = _data.activities[iOperation].parents.length;
+		let l = _data.meta[iOperation].parents.length;
 		let currentLevel;
 		if( l == 0 ) {
 			currentLevel = _data.activities[iOperation].Level;
 		} else {
-			let lastPushedIndex = _data.activities[iOperation].parents[l-1];
+			let lastPushedIndex = _data.meta[iOperation].parents[l-1];
 			currentLevel = _data.activities[lastPushedIndex].Level;
 		}
 		if( currentLevel === null ) { // Current level is an operation
 			if( typeof(_data.activities[i].Level) === 'number' ) {
-				_data.activities[iOperation].parents.push(i);
+				_data.meta[iOperation].parents.push(i);
 			}
 		} else if( typeof(currentLevel) === 'number' ) { // Current level is a phase
 			if( typeof(_data.activities[i].Level) === 'number' ) {
 				if( _data.activities[i].Level < currentLevel ) {
-					_data.activities[iOperation].parents.push(i);
+					_data.meta[iOperation].parents.push(i);
 				}
 			}
 		} else if( typeof(currentLevel) === 'string' ) { // Current level is a team or resourse
 			if( _data.activities[i].Level === null ) { // The upper level element is an operation
-				_data.activities[iOperation].parents.push(i);
+				_data.meta[iOperation].parents.push(i);
 			} else if( currentLevel == 'A' ) {
 				if( _data.activities[i].Level === 'T' ) { // The upper level element is a team
-					_data.activities[iOperation].parents.push(i);
+					_data.meta[iOperation].parents.push(i);
 				}
 			}
 		}
