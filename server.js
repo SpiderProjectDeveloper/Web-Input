@@ -26,6 +26,10 @@ app.get('/user_data.csv.php', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public/user_data.csv.php'));
 });
 
+app.get('/.close_project', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public/.close_project'));
+});
+
 app.get('/server.php', (req, res) => {
 	if( req.query.action == 'check_synchronization' ) {
   		res.send( JSON.stringify( { synchronized:1 } ) );

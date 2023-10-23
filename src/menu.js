@@ -65,8 +65,10 @@ function hideContent( id ) {
 }
 
 
-function closeProject() {
-	if( document.location.host ) {
+function closeProject() 
+{
+	if( document.location.host ) 
+	{
 		let xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			console.log(this.readyState);

@@ -24,6 +24,9 @@ module.exports = {
 			app.post('/.save_input', (req, res) => {
 			  res.sendFile(path.resolve(__dirname, 'public/save_input.json'));
 			});
+			app.post('/.close_project', (req, res) => {
+			  res.sendFile(path.resolve(__dirname, 'public/close_project.json'));
+			});
 			app.get('/project_closed.html', (req, res) => {
 			  res.sendFile(path.resolve(__dirname, 'public/project_closed.html'));
 			});

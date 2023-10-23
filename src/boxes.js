@@ -44,13 +44,15 @@ export function displayConfirmationBox( message, okFunction=null ) {
 	}
 }
 
-export function hideConfirmationBox() {
+export function hideConfirmationBox() 
+{
 	_blackOutBoxDiv.style.display='none';	
 	_blackOutBoxDiv.onclick = null;
 	_confirmationBoxDiv.style.display = 'none';
 }
 
-export function displayMessageBox( message ) {
+export function displayMessageBox( message ) 
+{
 	_blackOutBoxDiv = document.getElementById("blackOutBox");
 	_messageBoxDiv = document.getElementById("messageBox");
 	_messageBoxTextDiv = document.getElementById("messageBoxText");
@@ -71,7 +73,8 @@ export function displayEditBox() {
 	_globals.containerDiv.style.display = 'none';
 }
 
-export function hideEditBox( confirmHide = false ) {
+export function hideEditBox( confirmHide = false )
+{
 	let allowed = true;
 	if( confirmHide ) {
 		allowed = confirm(_texts[_globals.lang].confirmExitWithoutSaveMessage);
@@ -88,7 +91,8 @@ export function hideEditBox( confirmHide = false ) {
 }
 
 
-function validateEditFieldAndFocusIfFailed(input, type) { // To make sure data entered are valid...
+function validateEditFieldAndFocusIfFailed(input, type)  // To make sure data entered are valid...
+{
 	let v = validateEditField( input, type );
 	if( !v.ok ) {
 		_editBoxMessageElem.innerText = v.message;
@@ -99,7 +103,8 @@ function validateEditFieldAndFocusIfFailed(input, type) { // To make sure data e
 }
 
 
-export function createEditBoxInputs() {
+export function createEditBoxInputs() 
+{
 	_blackOutBoxDiv = document.getElementById("blackOutBox");
 	_editBoxDiv = document.getElementById('editBox');			
 	_editBoxDetailsElem = document.getElementById('editBoxDetails');
@@ -348,9 +353,14 @@ function saveUserDataFromEditBox(ref) {
 				}
 
 				let ei = _editBoxOperationIndex;
-				let editBoxActivityCacheKey = makeActivityCacheKey( _data.activities[ei].Level, _data.activities[ei].Code, 
-					_data.meta[ei].parentOperationCode, _data.activities[ei].AssIndex );
-				for( let i = 0 ; i < responseObj.array.length ; i++ ) {
+				let editBoxActivityCacheKey = makeActivityCacheKey( 
+					_data.activities[ei].Level, 
+					_data.activities[ei].Code, 
+					_data.meta[ei].parentOperationCode, 
+					_data.activities[ei].AssIndex 
+				);
+				for( let i = 0 ; i < responseObj.array.length ; i++ ) 
+				{
 					let arrayItem = responseObj.array[i];
 					let pcode = ( i === 0 ) ? null : responseObj.array[0].Code; 	// parent (if exists) goes first (i===0), cheildren next
 					let key = makeActivityCacheKey( arrayItem.Level, arrayItem.Code, pcode, arrayItem.AssIndex );
@@ -495,7 +505,8 @@ function getCalendarFormat() {
 }
 
 
-function createUserDataObjectToSendAfterEditingInBox( i, ref ) {
+function createUserDataObjectToSendAfterEditingInBox( i, ref ) 
+{
 	let parentOperationCode = null;
 	if( _data.meta[i].parentOfParentIndex ) {
 		parentOperationCode = _data.activities[ _data.meta[i].parentOfParentIndex ].Code;
@@ -526,7 +537,7 @@ function createUserDataObjectToSendAfterEditingInBox( i, ref ) {
 		from = _globals.startDate;
 		to = _globals.startDate;
 	}
-	let data = { fileName: _globals.projectId, from: from, to: to };
+	let data = { fileName: decodeURIComponent(_globals.projectId), from: from, to: to };
 	if( parentOperationCode === null ) { 	// It's an operation, not an assignment or a team 
 		data.array = [ userData ];
 	}	else { 	// It's an assignment
@@ -536,7 +547,8 @@ function createUserDataObjectToSendAfterEditingInBox( i, ref ) {
 }
 
 
-function calculateSecondsInIntervalWithCalendar( start, end, i ) {
+function calculateSecondsInIntervalWithCalendar( start, end, i ) 
+{
 	let endLessStart = end - start;
 	if( !( 'Calen' in _data.activities[i] ) ) {
 		return endLessStart;
