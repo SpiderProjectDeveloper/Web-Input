@@ -1,0 +1,504 @@
+﻿{
+  "parameters" : {
+    "language" : "ru",
+    "timeDelim" : ":",
+    "dateDelim" : ".",
+    "chatPort" : "9000",
+    "apiPort" : "8080",
+    "dateFormat" : "",
+    "uploadTime" : 1697034473,
+    "performanceFromCurTime" : "yes",
+    "performanceDays" : 10 
+  },
+  "project" : {
+    "Code" : "AP",
+    "Version" : "9",
+    "Name" : "Строительство гаража-бокса",
+    "Notes" : "Текущая версия проекта",
+    "CurTime" : 1594800000,
+    "numDashboardItems" : 5,
+    "dataChanged" : 1696854982 
+  },
+  "performanceInputSettings" : {
+    "f_PerformanceInputStart" : 1594771200,
+    "f_PerformanceInputFin" : 1595376000,
+    "f_PerformanceShowAssignments" : "no" 
+  },
+  "project" : {
+    "Code" : "AP",
+    "Version" : "9",
+    "Name" : "Строительство гаража-бокса",
+    "Notes" : "Текущая версия проекта",
+    "CurTime" : 1594800000,
+    "numDashboardItems" : 5,
+    "dataChanged" : 1696854982 
+  },
+  "performanceInputSettings" : {
+    "f_PerformanceInputStart" : 1594771200,
+    "f_PerformanceInputFin" : 1595376000,
+    "f_PerformanceShowAssignments" : "no" 
+  },
+  "fields" : [
+    {
+      "Code" : "Level",
+      "Name" : "Уровень",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 2 
+    },
+    {
+      "Code" : "Code",
+      "Name" : "Код",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Name",
+      "Name" : "Название",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 40 
+    },
+    {
+      "Code" : "Start",
+      "Name" : "Начало периода",
+      "Type" : "datetime",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 1,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Fin",
+      "Name" : "Окончание периода",
+      "Type" : "datetime",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 1,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "AssIndex",
+      "Name" : "Индекс",
+      "Type" : "text",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolPlan",
+      "Name" : "Объём [Было]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolDone",
+      "Name" : "Объём [Выполнено]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "VolRest",
+      "Name" : "Объём [Остаток]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "TeamDur",
+      "Name" : "Длительность, Часы [Было]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "DurDone",
+      "Name" : "Длительность, Часы [Пройдено]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "DurRest",
+      "Name" : "Длительность, Часы [Остаток]",
+      "Type" : "number",
+      "editable" : 1,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "NumFact",
+      "Name" : "Количество [Факт]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "WorkLoadDone",
+      "Name" : "Трудоёмкость [Выполнено]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "LoadFact",
+      "Name" : "Загрузка [Факт]",
+      "Type" : "number",
+      "editable" : 0,
+      "hidden" : 0,
+      "format" : 2,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "Calen",
+      "Name" : "Календарь",
+      "Type" : "text",
+      "hidden" : 1,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "f_FontColor",
+      "Name" : "Цвет текста",
+      "Type" : "text",
+      "hidden" : 1,
+      "format" : 0,
+      "widthsym" : 17 
+    },
+    {
+      "Code" : "f_ColorBack",
+      "Name" : "Цвет фона",
+      "Type" : "text",
+      "hidden" : 1,
+      "format" : 0,
+      "widthsym" : 17 
+    } 
+  ],
+  "activities" : [
+    {
+      "Level" : "1",
+      "Code" : "ГРЖ",
+      "Name" : "Строительство гаража-бокса",
+      "f_ColorBack" : "13233656" 
+    },
+    {
+      "Level" : "2",
+      "Code" : "ПЗЧ",
+      "Name" : "Работы по устройству подземной части",
+      "f_ColorBack" : "13434828" 
+    },
+    {
+      "Level" : "3",
+      "Code" : "ПЗЧ_ЗЕМ",
+      "Name" : "Земляные работы",
+      "f_ColorBack" : "16769505" 
+    },
+    {
+      "Code" : "ПЗЧ_ЗЕМ_зас.мех",
+      "Name" : "Засыпка траншей и котлованов с перемещением грунта до 5 м бульдозерами мощностью 59 (80) кВт (л.с.), 2 группа грунтов",
+      "Start" : 1595241966,
+      "Fin" : 1595347200,
+      "VolPlan" : 0.162,
+      "VolDone" : 0.133886945658963,
+      "VolRest" : 0.0281130543410369,
+      "TeamDur" : 16.01,
+      "DurDone" : 13.2316666666667,
+      "DurRest" : 2.77833333333333,
+      "WorkLoadDone" : 26.4633333333333,
+      "f_ColorBack" : "16777215" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "МШ1",
+      "Name" : "Машинист первой смены",
+      "Start" : 1595241966,
+      "Fin" : 1595347200,
+      "VolPlan" : 0.162,
+      "VolDone" : 0.133886945658963,
+      "VolRest" : 0.0281130543410369,
+      "TeamDur" : 16.01,
+      "DurDone" : 13.2316666666667,
+      "DurRest" : 2.77833333333333,
+      "NumFact" : 1,
+      "WorkLoadDone" : 13.2316666666667,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "КВШ",
+      "Name" : "Ковшовый погрузчик",
+      "Start" : 1595241966,
+      "Fin" : 1595347200,
+      "VolPlan" : 0.162,
+      "VolDone" : 0.133886945658963,
+      "VolRest" : 0.0281130543410369,
+      "TeamDur" : 16.01,
+      "DurDone" : 13.2316666666667,
+      "DurRest" : 2.77833333333333,
+      "NumFact" : 1,
+      "WorkLoadDone" : 13.2316666666667,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Code" : "ПЗЧ_ЗЕМ_зас.руч",
+      "Name" : "Засыпка вручную траншей, пазух котлованов и ям, группа грунтов 2",
+      "Start" : 1595343485,
+      "Fin" : 1595347200,
+      "VolPlan" : 0.02,
+      "VolDone" : 0.00541663629073412,
+      "VolRest" : 0.0145833637092659,
+      "TeamDur" : 3.81027777777778,
+      "DurDone" : 1.03194444444444,
+      "DurRest" : 2.77833333333333,
+      "WorkLoadDone" : 2.06388888888889,
+      "f_ColorBack" : "16777215" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "РБ1",
+      "Name" : "Рабочий первой смены",
+      "Start" : 1595343485,
+      "Fin" : 1595347200,
+      "VolPlan" : 0.02,
+      "VolDone" : 0.00541663629073412,
+      "VolRest" : 0.0145833637092659,
+      "TeamDur" : 3.81027777777778,
+      "DurDone" : 1.03194444444444,
+      "DurRest" : 2.77833333333333,
+      "NumFact" : 2,
+      "WorkLoadDone" : 2.06388888888889,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "3",
+      "Code" : "ПЗЧ_ВНП",
+      "Name" : "Монтаж внутренних перегородок",
+      "f_ColorBack" : "16769505" 
+    },
+    {
+      "Code" : "ПЗЧ_НРС_внт.стн",
+      "Name" : "Кладка стен внутренних из легкобетонных камней без облицовки при высоте этажа до 4 м",
+      "Start" : 1594800000,
+      "Fin" : 1594989421,
+      "VolPlan" : 4.74895589757908,
+      "VolDone" : 4.74895589757908,
+      "TeamDur" : 20.6169444444444,
+      "DurDone" : 20.6169444444444,
+      "WorkLoadDone" : 123.701666666667,
+      "f_ColorBack" : "16777215" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "РБ1",
+      "Name" : "Рабочий первой смены",
+      "Start" : 1594800000,
+      "Fin" : 1594989421,
+      "VolPlan" : 4.74895589757908,
+      "VolDone" : 4.74895589757908,
+      "TeamDur" : 20.6169444444444,
+      "DurDone" : 20.6169444444444,
+      "NumFact" : 4,
+      "WorkLoadDone" : 82.4677777777778,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "АТК",
+      "Name" : "Автокран грузоподъемностью 16 тн.",
+      "Start" : 1594800000,
+      "Fin" : 1594989421,
+      "VolPlan" : 4.74895589757908,
+      "VolDone" : 4.74895589757908,
+      "TeamDur" : 20.6169444444444,
+      "DurDone" : 20.6169444444444,
+      "NumFact" : 1,
+      "WorkLoadDone" : 20.6169444444444,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "МШ1",
+      "Name" : "Машинист первой смены",
+      "Start" : 1594800000,
+      "Fin" : 1594989421,
+      "VolPlan" : 4.74895589757908,
+      "VolDone" : 4.74895589757908,
+      "TeamDur" : 20.6169444444444,
+      "DurDone" : 20.6169444444444,
+      "NumFact" : 1,
+      "WorkLoadDone" : 20.6169444444444,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "3",
+      "Code" : "ПЗЧ_ПРК",
+      "Name" : "Монтаж перекрытия",
+      "f_ColorBack" : "16769505" 
+    },
+    {
+      "Code" : "ПЗЧ_ПРК_уст.прк",
+      "Name" : "Установка панелей перекрытий с опиранием по контуру площадью до 25 м2",
+      "Start" : 1594800000,
+      "Fin" : 1595241966,
+      "VolPlan" : 0.11,
+      "VolDone" : 0.11,
+      "TeamDur" : 34.7680555555556,
+      "DurDone" : 34.7680555555556,
+      "WorkLoadDone" : 236.422777777778,
+      "f_ColorBack" : "16777215" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "РБ1",
+      "Name" : "Рабочий первой смены",
+      "Start" : 1594800000,
+      "Fin" : 1595241966,
+      "VolPlan" : 0.11,
+      "VolDone" : 0.11,
+      "TeamDur" : 34.7680555555556,
+      "DurDone" : 34.7680555555556,
+      "NumFact" : 6,
+      "WorkLoadDone" : 208.608333333333,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "АТК",
+      "Name" : "Автокран грузоподъемностью 16 тн.",
+      "Start" : 1594800000,
+      "Fin" : 1595241966,
+      "VolPlan" : 0.11,
+      "VolDone" : 0.11,
+      "TeamDur" : 34.7680555555556,
+      "DurDone" : 34.7680555555556,
+      "NumFact" : 1,
+      "WorkLoadDone" : 13.9072222222222,
+      "LoadFact" : 40,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "МШ1",
+      "Name" : "Машинист первой смены",
+      "Start" : 1594800000,
+      "Fin" : 1595241966,
+      "VolPlan" : 0.11,
+      "VolDone" : 0.11,
+      "TeamDur" : 34.7680555555556,
+      "DurDone" : 34.7680555555556,
+      "NumFact" : 1,
+      "WorkLoadDone" : 13.9072222222222,
+      "LoadFact" : 40,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "2",
+      "Code" : "НЗЧ",
+      "Name" : "Работы по устройству надземной части",
+      "f_ColorBack" : "13434828" 
+    },
+    {
+      "Code" : "НЗЧ_клд.стн",
+      "Name" : "Кладка стен наружных простых при высоте этажа до 4 м из кирпича керамического одинарного",
+      "Start" : 1595241966,
+      "Fin" : 1595347200,
+      "VolPlan" : 46,
+      "VolDone" : 5.00061390436328,
+      "VolRest" : 40.9993860956367,
+      "TeamDur" : 121.716388888889,
+      "DurDone" : 13.2316666666667,
+      "DurRest" : 108.484722222222,
+      "WorkLoadDone" : 105.853333333333,
+      "f_ColorBack" : "16777215" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "РБ1",
+      "Name" : "Рабочий первой смены",
+      "Start" : 1595241966,
+      "Fin" : 1595347200,
+      "VolPlan" : 46,
+      "VolDone" : 5.00061390436328,
+      "VolRest" : 40.9993860956367,
+      "TeamDur" : 121.716388888889,
+      "DurDone" : 13.2316666666667,
+      "DurRest" : 108.484722222222,
+      "NumFact" : 8,
+      "WorkLoadDone" : 105.853333333333,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    },
+    {
+      "Level" : "2",
+      "Code" : "ОТД",
+      "Name" : "Работы по внутренней отделке",
+      "f_ColorBack" : "13434828" 
+    },
+    {
+      "Code" : "ОТД_штк.цем",
+      "Name" : "Улучшенная штукатурка цементно-известковым раствором по камню стен",
+      "Start" : 1595241966,
+      "Fin" : 1595347200,
+      "VolPlan" : 0.91,
+      "VolDone" : 0.190489110372831,
+      "VolRest" : 0.719510889627169,
+      "TeamDur" : 63.21,
+      "DurDone" : 13.2316666666667,
+      "DurRest" : 49.9783333333333,
+      "WorkLoadDone" : 52.9266666666667,
+      "f_ColorBack" : "16777215" 
+    },
+    {
+      "Level" : "A",
+      "Code" : "РБ1",
+      "Name" : "Рабочий первой смены",
+      "Start" : 1595241966,
+      "Fin" : 1595347200,
+      "VolPlan" : 0.91,
+      "VolDone" : 0.190489110372831,
+      "VolRest" : 0.719510889627169,
+      "TeamDur" : 63.21,
+      "DurDone" : 13.2316666666667,
+      "DurRest" : 49.9783333333333,
+      "NumFact" : 4,
+      "WorkLoadDone" : 52.9266666666667,
+      "LoadFact" : 100,
+      "f_ColorBack" : "14745599" 
+    } 
+  ],
+  "total" : 24,
+  "errcode" : 0,
+  "error" : "" 
+}

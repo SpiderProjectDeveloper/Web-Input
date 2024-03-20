@@ -196,7 +196,12 @@ function initData() {
 			}
 		}
 		if( hasChild ) {
-			_data.meta[i].expanded = true;
+			let expanded = true;
+			let fmc = _data.activities[i].f_MonConv;
+			if( fmc !== undefined && fmc !== null ) {
+				if( !fmc ) expanded = false;
+			}
+			_data.meta[i].expanded = expanded;
 			_data.meta[i].expandable = true;
 		} else {
 			_data.meta[i].expanded = true;			
