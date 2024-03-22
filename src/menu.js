@@ -71,8 +71,6 @@ function closeProject()
 	{
 		let xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
-			console.log(this.readyState);
-			console.log(this);
 			if (this.readyState === 4 ) {
 				window.close();
 			}

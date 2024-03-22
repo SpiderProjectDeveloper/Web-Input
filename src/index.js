@@ -199,7 +199,9 @@ function initData() {
 			let expanded = true;
 			let fmc = _data.activities[i].f_MonConv;
 			if( fmc !== undefined && fmc !== null ) {
-				if( !fmc ) expanded = false;
+				if( fmc === 1 ) {
+					expanded = false;
+				}
 			}
 			_data.meta[i].expanded = expanded;
 			_data.meta[i].expandable = true;
@@ -207,7 +209,18 @@ function initData() {
 			_data.meta[i].expanded = true;			
 			_data.meta[i].expandable = false;
 		}
-		_data.meta[i].visible = true;
+		
+		let visible = true;
+		if( _data.meta[i].parents && _data.meta[i].parents.length ) {
+			for( let j = 0 ; j < _data.meta[i].parents.length ; j++ ) {
+				let ip = _data.meta[i].parents[j];
+				if( _data.meta[ip].expanded === false ) { 
+					visible = false;
+					break;
+				}
+			}
+		}
+		_data.meta[i].visible = visible;
 	}
 
 	_data.activityCache = makeActivityCache(_data);
